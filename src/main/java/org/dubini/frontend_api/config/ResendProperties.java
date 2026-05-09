@@ -11,6 +11,7 @@ public class ResendProperties {
     private String associationEmailContact;
     private String associationEmailMuseum;
     private String associationEmailMuseum2;
+    private String associationEmailInscription;
     private String apiKey;
 
     public String getMail() {
@@ -51,5 +52,13 @@ public class ResendProperties {
 
     public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
+    }
+
+    public String getAssociationEmailInscription() {
+        return associationEmailInscription;
+    }
+
+    public void setAssociationEmailInscription(String associationEmailInscription) {
+        this.associationEmailInscription = associationEmailInscription;
     }
 }

@@ -23,6 +23,8 @@ public class RateLimiterService {
         createCache("museo", 24, TimeUnit.HOURS);
         // Inicializar caché para contacto (1h recomendado)
         createCache("contacto", 1, TimeUnit.HOURS);
+        // Inicializar caché para inscripción (24h)
+        createCache("inscripcion", 24, TimeUnit.HOURS);
     }
 
     private void createCache(String context, long duration, TimeUnit unit) {

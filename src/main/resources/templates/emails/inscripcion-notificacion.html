@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva solicitud de inscripción</title>
+</head>
+
+<body style="margin:0;padding:0;background:#f4f7f6;font-family:Arial,sans-serif;color:#10234e;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:24px 0;">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;background:#ffffff;border:1px solid #e1e9e7;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+                    <tr>
+                        <td style="background:linear-gradient(135deg,#4462aa,#7db3c6);padding:24px;color:#ffffff;text-align:center;">
+                            <img src="https://mcybqxqlujczgclidnar.supabase.co/storage/v1/object/public/ajpd-storage/logo.png" alt="Logo AJPD" style="height:50px;margin-bottom:12px;">
+                            <h1 style="margin:0;font-size:24px;font-weight:600;">Nueva Solicitud de Socio</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:32px;">
+                            <p style="margin:0 0 20px 0;font-size:16px;line-height:1.5;">Se ha recibido una nueva solicitud de inscripción a través del sitio web.</p>
+                            
+                            <h2 style="font-size:18px;color:#4462aa;border-bottom:2px solid #f0f4f3;padding-bottom:8px;margin-bottom:16px;">Datos Personales</h2>
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin-bottom:24px;">
+                                <tr>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;width:150px;"><strong>Nombre:</strong></td>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;" th:text="${nombre}">Juan Pérez</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;"><strong>Email:</strong></td>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;">
+                                        <a th:href="'mailto:' + ${email}" style="color:#ca4353;text-decoration:none;" th:text="${email}">juan@ejemplo.com</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;"><strong>Teléfono:</strong></td>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;" th:text="${prefijo} + ' ' + ${telefono}">+34 600000000</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;"><strong>Doc. Identidad:</strong></td>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;" th:text="${documento}">12345678X</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;"><strong>País:</strong></td>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;" th:text="${pais}">España</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;"><strong>Dirección:</strong></td>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;" th:text="${direccion}">Calle Ejemplo 123</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;"><strong>Ocupación:</strong></td>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;" th:text="${ocupacion}">Estudiante</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;"><strong>F. Nacimiento:</strong></td>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;" th:text="${fechaNac}">01/01/2000</td>
+                                </tr>
+                            </table>
+
+                            <h2 style="font-size:18px;color:#4462aa;border-bottom:2px solid #f0f4f3;padding-bottom:8px;margin-bottom:16px;">Autorizaciones</h2>
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin-bottom:24px;">
+                                <tr>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;width:150px;"><strong>Grupo WhatsApp:</strong></td>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;" th:text="${authWhatsapp == 'accept' ? 'Aceptado' : 'Denegado'}">Aceptado</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;"><strong>Derechos Imagen:</strong></td>
+                                    <td style="padding:8px 0;border-bottom:1px solid #f0f4f3;" th:text="${authImagen == 'accept' ? 'Aceptado' : 'Denegado'}">Aceptado</td>
+                                </tr>
+                            </table>
+
+                            <h2 style="font-size:18px;color:#4462aa;border-bottom:2px solid #f0f4f3;padding-bottom:8px;margin-bottom:16px;">Comentarios</h2>
+                            <div style="background:#f8faf9;padding:20px;border-left:4px solid #ca4353;border-radius:6px;">
+                                <p style="margin:0;line-height:1.6;white-space:pre-wrap;" th:text="${comentarios}">Sin comentarios</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background:#f8faf9;padding:24px;border-top:1px solid #e1e9e7;font-size:13px;color:#6d7c7a;text-align:center;">
+                            <p style="margin:0 0 8px 0;font-weight:bold;color:#10234e;">Asociación Juvenil Proyecto Dubini - AJPD</p>
+                            <p style="margin:0 0 4px 0;">Este es un correo automático generado por el sitio web oficial.</p>
+                            <p style="margin:0;"><a href="https://proyectodubini.org" style="color:#ca4353;text-decoration:none;">proyectodubini.org</a></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

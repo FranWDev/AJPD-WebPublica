@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Únete a la Asociación Juvenil Proyecto Dubini (AJPD). Formulario de inscripción para nuevos socios.">
+
+    <title>Inscripción - AJPD</title>
+    <link rel="stylesheet" href="/styles/pages/join.css">
+    <link rel="stylesheet" href="/styles/layout/header.css">
+    <link rel="stylesheet" href="/styles/layout/footer.css">
+    <link rel="stylesheet" href="/styles/components/wsp-icon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/styles/base.css">
+</head>
+
+<body>
+    <header th:replace="~{fragments/header :: header}"></header>
+
+    <main role="main" class="join-main">
+        <section class="wizard-section animate-fadeIn">
+            <div class="container">
+                <div class="wizard-container">
+                    <div class="wizard-header">
+                        <h1 id="title-main">Formulario de Inscripción</h1>
+                        <div class="stepper">
+                            <div class="step active" data-step="1">1</div>
+                            <div class="step-line"></div>
+                            <div class="step" data-step="2">2</div>
+                            <div class="step-line"></div>
+                            <div class="step" data-step="3">3</div>
+                            <div class="step-line"></div>
+                            <div class="step" data-step="4">4</div>
+                            <div class="step-line"></div>
+                            <div class="step" data-step="5">5</div>
+                            <div class="step-line"></div>
+                            <div class="step" data-step="6">6</div>
+                            <div class="step-line"></div>
+                            <div class="step" data-step="7">7</div>
+                        </div>
+                    </div>
+
+                    <!-- Mensaje de que ya se envió el formulario -->
+                    <div id="already-submitted-msg" style="display: none; text-align: center; padding: 2rem;">
+                        <h2>Ya hemos recibido tu solicitud</h2>
+                        <p style="margin-bottom: 1.5rem; color: #555;">Tu formulario de inscripción ya ha sido enviado y está en proceso de revisión. Nos pondremos en contacto contigo pronto.</p>
+                        <a href="/" class="btn btn-primary" style="display: inline-flex; justify-content: center;">Volver al Inicio</a>
+                    </div>
+
+                    <form id="joinForm" class="wizard-form">
+                        
+                        <!-- Paso 1: Idioma -->
+                        <div class="wizard-step active-step" id="step-1">
+                            <h2 id="step1-title">Seleccione su idioma / Select your language</h2>
+                            <div class="form-group lang-selection">
+                                <label class="radio-label">
+                                    <input type="radio" name="language" value="es" required>
+                                    <span class="radio-custom"></span>
+                                    Español (Spanish)
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="language" value="en" required>
+                                    <span class="radio-custom"></span>
+                                    Inglés (English)
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Paso 2: Derechos y Deberes -->
+                        <div class="wizard-step" id="step-2">
+                            <h2 id="step2-title">Ser Socio de la Asociación Juvenil Proyecto Dubini (AJPD)</h2>
+                            <div class="scrollable-content" id="step2-content">
+                                <!-- El contenido se inyectará vía JS dependiendo del idioma -->
+                            </div>
+                        </div>
+
+                        <!-- Paso 3: Datos Personales -->
+                        <div class="wizard-step" id="step-3">
+                            <h2 id="step3-title">Datos Personales del Socio</h2>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="nombre" id="lbl-nombre">Nombre y Apellidos *</label>
+                                    <input type="text" id="nombre" name="nombre" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" id="lbl-email">Correo electrónico *</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group phone-group">
+                                    <label for="telefono" id="lbl-telefono">Número de teléfono con prefijo *</label>
+                                    <div class="phone-input-wrap animate-input">
+                                        <select id="prefijo" name="prefijo" required>
+                                            <!-- Poblado por JS -->
+                                        </select>
+                                        <input type="tel" id="telefono" name="telefono" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="documento" id="lbl-documento">Número de documento identificativo (DNI,NIF,NIE...) *</label>
+                                    <input type="text" id="documento" name="documento" required>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-row">
+                                <div class="form-group animate-input">
+                                    <label for="pais" id="lbl-pais">País *</label>
+                                    <select id="pais" name="pais" required>
+                                        <!-- Poblado por JS -->
+                                    </select>
+                                </div>
+                                <div class="form-group animate-input">
+                                    <label for="direccion" id="lbl-direccion">Domicilio completo *</label>
+                                    <input type="text" id="direccion" name="direccion" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group animate-input">
+                                    <label for="ocupacion" id="lbl-ocupacion">Centro de Estudios / Ocupación *</label>
+                                    <input type="text" id="ocupacion" name="ocupacion" required>
+                                </div>
+                                <div class="form-group animate-input">
+                                    <label for="fecha_nac" id="lbl-fecha-nac">Fecha de Nacimiento *</label>
+                                    <input type="date" id="fecha_nac" name="fecha_nac" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Paso 4: Grupo WhatsApp -->
+                        <div class="wizard-step" id="step-4">
+                            <h2 id="step4-title">Autorización para la participación en un grupo de WhatsApp</h2>
+                            <div class="scrollable-content" id="step4-content">
+                                <!-- Contenido inyectado por JS -->
+                            </div>
+                            <div class="form-group auth-selection">
+                                <label class="radio-label">
+                                    <input type="radio" name="auth_whatsapp" value="accept" required>
+                                    <span class="radio-custom"></span>
+                                    <span id="lbl-wsp-accept">Acepto todo lo anterior</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="auth_whatsapp" value="deny" required>
+                                    <span class="radio-custom"></span>
+                                    <span id="lbl-wsp-deny">Deniego todo lo anterior</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Paso 5: Derechos de Imagen -->
+                        <div class="wizard-step" id="step-5">
+                            <h2 id="step5-title">Autorización sobre los derechos de imagen</h2>
+                            <div class="scrollable-content" id="step5-content">
+                                <!-- Contenido inyectado por JS -->
+                            </div>
+                            <div class="form-group auth-selection">
+                                <label class="radio-label">
+                                    <input type="radio" name="auth_imagen" value="accept" required>
+                                    <span class="radio-custom"></span>
+                                    <span id="lbl-img-accept">Acepto todo lo anterior</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="auth_imagen" value="deny" required>
+                                    <span class="radio-custom"></span>
+                                    <span id="lbl-img-deny">Deniego todo lo anterior</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Paso 6: Foto -->
+                        <div class="wizard-step" id="step-6">
+                            <h2 id="step6-title">Foto del Asociado</h2>
+                            <div class="form-group file-group animate-input">
+                                <p class="file-help" id="help-photo-files">Sube una foto tipo Carnet, donde seas fácilmente reconocible. (En caso de que hayas rechazado la autorización de derechos de imagen, esta servirá para identificarte y prevenir tu inclusión en nuestras redes sociales) Si tienes cualquier problema, manda la foto por correo a Secretaria@proyectodubini.org. Sube 1 archivo compatible. Tamaño máximo: 10 MB.</p>
+                                <input type="file" id="foto_carnet" name="foto_carnet" accept="image/*">
+                                <div id="preview-foto" class="image-previews"></div>
+                            </div>
+                        </div>
+
+                        <!-- Paso 7: Comentarios finales -->
+                        <div class="wizard-step" id="step-7">
+                            <h2 id="step7-title">¡Gracias!</h2>
+                            <div class="form-group">
+                                <label for="comentarios" id="lbl-comentarios">¿Algo que comentarnos?</label>
+                                <textarea id="comentarios" name="comentarios" rows="4" placeholder="..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Navegación -->
+                        <div class="wizard-navigation">
+                            <button type="button" id="prevBtn" class="btn btn-secondary" style="display: none;">
+                                <i class="fas fa-arrow-left"></i> <span id="btn-prev-text">Atrás</span>
+                            </button>
+                            <button type="button" id="nextBtn" class="btn btn-primary">
+                                <span id="btn-next-text">Siguiente</span> <i class="fas fa-arrow-right"></i>
+                            </button>
+                            <button type="submit" id="submitBtn" class="btn btn-primary" style="display: none;">
+                                <span id="btn-submit-text">Enviar Inscripción</span> <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div th:replace="~{fragments/wsp-icon :: wsp-icon}"></div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <!-- Modal de Éxito -->
+    <div id="success-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content animate-fadeIn">
+            <i class="fas fa-check-circle modal-icon"></i>
+            <h2 id="modal-success-title">¡Inscripción Completada!</h2>
+            <p id="modal-success-text">Hemos recibido tu solicitud correctamente. Nos pondremos en contacto contigo lo antes posible para indicarte los siguientes pasos.</p>
+            <a href="/" class="btn btn-primary" id="modal-success-btn" style="justify-content: center;">Volver al Inicio</a>
+        </div>
+    </div>
+
+    <script src="/scripts/script.js"></script>
+    <script src="/scripts/pages/join.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmación de solicitud de socio</title>
+</head>
+
+<body style="margin:0;padding:0;background:#f4f7f6;font-family:Arial,sans-serif;color:#10234e;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:24px 0;">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;background:#ffffff;border:1px solid #e1e9e7;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+                    <tr>
+                        <td style="background:linear-gradient(135deg,#4462aa,#7db3c6);padding:24px;color:#ffffff;text-align:center;">
+                            <img src="https://mcybqxqlujczgclidnar.supabase.co/storage/v1/object/public/ajpd-storage/logo.png" alt="Logo AJPD" style="height:50px;margin-bottom:12px;">
+                            <h1 style="margin:0;font-size:24px;font-weight:600;">¡Gracias por unirte a AJPD!</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:32px;">
+                            <p style="margin:0 0 20px 0;font-size:16px;line-height:1.5;">Hola <strong th:text="${nombre}">Usuario</strong>,</p>
+                            <p style="margin:0 0 20px 0;font-size:16px;line-height:1.5;">Hemos recibido correctamente tu solicitud para convertirte en socio de la <strong>Asociación Juvenil Proyecto Dubini (AJPD)</strong>.</p>
+                            
+                            <p style="margin:0 0 20px 0;font-size:16px;line-height:1.5;">Revisaremos tu solicitud y en breve nos pondremos en contacto contigo para indicarte los siguientes pasos y darte la bienvenida oficial.</p>
+                            
+                            <div style="background:#f8faf9;padding:20px;border-radius:6px;margin-bottom:24px;text-align:center;">
+                                <p style="margin:0;font-weight:bold;color:#4462aa;">Tu solicitud está en proceso de revisión.</p>
+                            </div>
+
+                            <p style="margin:0;font-size:16px;line-height:1.5;">Si tienes cualquier duda, puedes escribirnos a <a href="mailto:contacto@proyectodubini.org" style="color:#ca4353;text-decoration:none;">contacto@proyectodubini.org</a>, contactarnos a través de nuestras redes sociales o mediante nuestro <a href="https://www.proyectodubini.org/contacto" style="color:#ca4353;text-decoration:none;">formulario de contacto</a>.</p>
+                            <br>
+                            <p style="margin:0;font-size:16px;line-height:1.5;">Atentamente,<br><strong>El equipo de AJPD</strong></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background:#f8faf9;padding:24px;border-top:1px solid #e1e9e7;font-size:13px;color:#6d7c7a;text-align:center;">
+                            <p style="margin:0 0 8px 0;font-weight:bold;color:#10234e;">Asociación Juvenil Proyecto Dubini - AJPD</p>
+                            <p style="margin:0 0 4px 0;">Este es un correo automático. Por favor, no respondas directamente a este mensaje.</p>
+                            <p style="margin:0;"><a href="https://proyectodubini.org" style="color:#ca4353;text-decoration:none;">proyectodubini.org</a></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

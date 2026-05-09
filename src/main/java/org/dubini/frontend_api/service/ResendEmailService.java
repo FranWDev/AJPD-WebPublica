@@ -4,6 +4,7 @@ package org.dubini.frontend_api.service;
 
 import org.dubini.frontend_api.config.ResendProperties;
 import org.dubini.frontend_api.dto.ContactRequest;
+import org.dubini.frontend_api.dto.InscripcionRequest;
 import org.dubini.frontend_api.dto.MuseoVisitanteRegistroRequest;
 import org.dubini.frontend_api.exception.MuseoRegistroException;
 import org.springframework.http.HttpEntity;
@@ -12,10 +13,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -77,7 +82,61 @@ public class ResendEmailService {
         enviarCorreoHtml(solicitud.getEmail(), "Hemos recibido tu mensaje - AJPD", htmlConfirmacion);
     }
 
+    public void enviarInscripcion(InscripcionRequest solicitud) {
+        validarConfiguracion();
+
+        Context context = new Context();
+        context.setVariable("nombre", solicitud.getNombre());
+        context.setVariable("email", solicitud.getEmail());
+        context.setVariable("prefijo", solicitud.getPrefijo());
+        context.setVariable("telefono", solicitud.getTelefono());
+        context.setVariable("documento", solicitud.getDocumento());
+        context.setVariable("pais", solicitud.getPais());
+        context.setVariable("direccion", solicitud.getDireccion());
+        context.setVariable("ocupacion", solicitud.getOcupacion());
+        context.setVariable("fechaNac", solicitud.getFecha_nac());
+        context.setVariable("authWhatsapp", solicitud.getAuth_whatsapp());
+        context.setVariable("authImagen", solicitud.getAuth_imagen());
+        context.setVariable("comentarios", normalizarComentarios(solicitud.getComentarios()));
+
+        String htmlNotificacion = templateEngine.process("emails/inscripcion-notificacion", context);
+        
+        // Determinar idioma para el correo de confirmación
+        boolean isEnglish = "en".equalsIgnoreCase(solicitud.getLang());
+        String templateConfirmacion = isEnglish ? "emails/inscripcion-confirmacion-en" : "emails/inscripcion-confirmacion";
+        String asuntoConfirmacion = isEnglish ? "Member Application Confirmation - AJPD" : "Confirmación de solicitud de socio - AJPD";
+        
+        String htmlConfirmacion = templateEngine.process(templateConfirmacion, context);
+
+        List<AttachmentWrapper> adjuntos = new ArrayList<>();
+        if (solicitud.getFoto_carnet() != null && !solicitud.getFoto_carnet().isEmpty()) {
+            String extension = getFileExtension(solicitud.getFoto_carnet().getOriginalFilename());
+            String nuevoNombre = "foto_carnet_" + solicitud.getNombre().replaceAll("[^a-zA-Z0-8]", "_") + extension;
+            adjuntos.add(new AttachmentWrapper(nuevoNombre, solicitud.getFoto_carnet()));
+        }
+
+        // Enviar notificación a la asociación
+        enviarCorreoHtml(resendProperties.getAssociationEmailInscription(), "Nueva solicitud de inscripción: " + solicitud.getNombre(), htmlNotificacion, adjuntos);
+        
+        // Enviar confirmación al usuario (sin adjuntos para no saturar su buzón)
+        enviarCorreoHtml(solicitud.getEmail(), asuntoConfirmacion, htmlConfirmacion);
+    }
+
+    // Helper class to handle custom filenames for attachments
+    private record AttachmentWrapper(String filename, MultipartFile file) {}
+
+    private String getFileExtension(String fileName) {
+        if (fileName == null || fileName.lastIndexOf(".") == -1) {
+            return "";
+        }
+        return fileName.substring(fileName.lastIndexOf("."));
+    }
+
     private void enviarCorreoHtml(String destinatario, String asunto, String html) {
+        enviarCorreoHtml(destinatario, asunto, html, null);
+    }
+
+    private void enviarCorreoHtml(String destinatario, String asunto, String html, List<AttachmentWrapper> attachments) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -88,6 +147,17 @@ public class ResendEmailService {
             requestBody.put("to", new String[]{destinatario});
             requestBody.put("subject", asunto);
             requestBody.put("html", html);
+
+            if (attachments != null && !attachments.isEmpty()) {
+                List<Map<String, String>> attachmentList = new ArrayList<>();
+                for (AttachmentWrapper wrapper : attachments) {
+                    Map<String, String> att = new HashMap<>();
+                    att.put("filename", wrapper.filename());
+                    att.put("content", Base64.getEncoder().encodeToString(wrapper.file().getBytes()));
+                    attachmentList.add(att);
+                }
+                requestBody.put("attachments", attachmentList);
+            }
 
             HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
 
@@ -117,6 +187,9 @@ public class ResendEmailService {
         }
         if (resendProperties.getAssociationEmailMuseum() == null || resendProperties.getAssociationEmailMuseum().isBlank()) {
             throw new MuseoRegistroException("La propiedad resend.association-email-museum no está configurada.");
+        }
+        if (resendProperties.getAssociationEmailInscription() == null || resendProperties.getAssociationEmailInscription().isBlank()) {
+            throw new MuseoRegistroException("La propiedad resend.association-email-inscription no está configurada.");
         }
     }
 }

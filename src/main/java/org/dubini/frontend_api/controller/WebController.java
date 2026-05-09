@@ -71,4 +71,9 @@ public class WebController {
     public String historiaJardin() {
         return "historia-y-mision-jardin-botanico";
     }
+
+    @GetMapping("/se-socio")
+    public String join() {
+        return "join";
+    }
 }
