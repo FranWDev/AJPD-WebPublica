@@ -9,11 +9,18 @@ public class InscripcionRequest {
     private String telefono;
     private String documento;
     private String pais;
-    private String direccion;
+    private String direccion_calle;
+    private String direccion_numero;
+    private String direccion_puerta;
+    private String direccion_resto;
+    private String direccion_codigo_postal;
+    private String direccion_provincia;
+    private String direccion_ciudad;
     private String ocupacion;
     private String fecha_nac;
     private String auth_whatsapp;
     private String auth_imagen;
+    private String auth_datos;
     private String comentarios;
     private String lang;
     private MultipartFile foto_carnet;
@@ -36,8 +43,26 @@ public class InscripcionRequest {
     public String getPais() { return pais; }
     public void setPais(String pais) { this.pais = pais; }
 
-    public String getDireccion() { return direccion; }
-    public void setDireccion(String direccion) { this.direccion = direccion; }
+    public String getDireccion_calle() { return direccion_calle; }
+    public void setDireccion_calle(String direccion_calle) { this.direccion_calle = direccion_calle; }
+
+    public String getDireccion_numero() { return direccion_numero; }
+    public void setDireccion_numero(String direccion_numero) { this.direccion_numero = direccion_numero; }
+
+    public String getDireccion_puerta() { return direccion_puerta; }
+    public void setDireccion_puerta(String direccion_puerta) { this.direccion_puerta = direccion_puerta; }
+
+    public String getDireccion_resto() { return direccion_resto; }
+    public void setDireccion_resto(String direccion_resto) { this.direccion_resto = direccion_resto; }
+
+    public String getDireccion_codigo_postal() { return direccion_codigo_postal; }
+    public void setDireccion_codigo_postal(String direccion_codigo_postal) { this.direccion_codigo_postal = direccion_codigo_postal; }
+
+    public String getDireccion_provincia() { return direccion_provincia; }
+    public void setDireccion_provincia(String direccion_provincia) { this.direccion_provincia = direccion_provincia; }
+
+    public String getDireccion_ciudad() { return direccion_ciudad; }
+    public void setDireccion_ciudad(String direccion_ciudad) { this.direccion_ciudad = direccion_ciudad; }
 
     public String getOcupacion() { return ocupacion; }
     public void setOcupacion(String ocupacion) { this.ocupacion = ocupacion; }
@@ -50,6 +75,9 @@ public class InscripcionRequest {
 
     public String getAuth_imagen() { return auth_imagen; }
     public void setAuth_imagen(String auth_imagen) { this.auth_imagen = auth_imagen; }
+
+    public String getAuth_datos() { return auth_datos; }
+    public void setAuth_datos(String auth_datos) { this.auth_datos = auth_datos; }
 
     public String getComentarios() { return comentarios; }
     public void setComentarios(String comentarios) { this.comentarios = comentarios; }

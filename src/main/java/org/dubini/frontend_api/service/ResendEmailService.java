@@ -85,6 +85,17 @@ public class ResendEmailService {
     public void enviarInscripcion(InscripcionRequest solicitud) {
         validarConfiguracion();
 
+        // Format address from separate fields
+        String direccionFormateada = formatearDireccion(
+            solicitud.getDireccion_calle(),
+            solicitud.getDireccion_numero(),
+            solicitud.getDireccion_puerta(),
+            solicitud.getDireccion_resto(),
+            solicitud.getDireccion_codigo_postal(),
+            solicitud.getDireccion_provincia(),
+            solicitud.getDireccion_ciudad()
+        );
+
         Context context = new Context();
         context.setVariable("nombre", solicitud.getNombre());
         context.setVariable("email", solicitud.getEmail());
@@ -92,11 +103,12 @@ public class ResendEmailService {
         context.setVariable("telefono", solicitud.getTelefono());
         context.setVariable("documento", solicitud.getDocumento());
         context.setVariable("pais", solicitud.getPais());
-        context.setVariable("direccion", solicitud.getDireccion());
+        context.setVariable("direccion", direccionFormateada);
         context.setVariable("ocupacion", solicitud.getOcupacion());
         context.setVariable("fechaNac", solicitud.getFecha_nac());
         context.setVariable("authWhatsapp", solicitud.getAuth_whatsapp());
         context.setVariable("authImagen", solicitud.getAuth_imagen());
+        context.setVariable("authDatos", solicitud.getAuth_datos());
         context.setVariable("comentarios", normalizarComentarios(solicitud.getComentarios()));
 
         String htmlNotificacion = templateEngine.process("emails/inscripcion-notificacion", context);
@@ -124,6 +136,41 @@ public class ResendEmailService {
 
     // Helper class to handle custom filenames for attachments
     private record AttachmentWrapper(String filename, MultipartFile file) {}
+
+    private String formatearDireccion(String calle, String numero, String puerta, String resto, 
+                                      String codigoPostal, String provincia, String ciudad) {
+        StringBuilder sb = new StringBuilder();
+        
+        if (calle != null && !calle.isBlank()) {
+            sb.append(calle);
+        }
+        if (numero != null && !numero.isBlank()) {
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(numero);
+        }
+        if (puerta != null && !puerta.isBlank()) {
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(puerta);
+        }
+        if (resto != null && !resto.isBlank()) {
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(resto);
+        }
+        if (codigoPostal != null && !codigoPostal.isBlank()) {
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(codigoPostal);
+        }
+        if (provincia != null && !provincia.isBlank()) {
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(provincia);
+        }
+        if (ciudad != null && !ciudad.isBlank()) {
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(ciudad);
+        }
+        
+        return sb.toString();
+    }
 
     private String getFileExtension(String fileName) {
         if (fileName == null || fileName.lastIndexOf(".") == -1) {

@@ -93,10 +93,16 @@ Esto se corresponde con los estatutos sociales de la Asociación.`,
             lblTelefono: "Número de teléfono con prefijo *",
             lblDocumento: "DNI / NIE / Pasaporte *",
             lblPais: "País *",
-            lblDireccion: "Domicilio completo *",
+            lblDireccionCalle: "Calle/Vía *",
+            lblDireccionNumero: "Número *",
+            lblDireccionPuerta: "Puerta",
+            lblDireccionResto: "Resto de Dirección",
+            lblDireccionCP: "Código Postal *",
+            lblDireccionProvincia: "Provincia",
+            lblDireccionCiudad: "Ciudad/Población *",
             lblOcupacion: "Centro de estudios / Ocupación *",
             lblFechaNac: "Fecha de Nacimiento *",
-            step4Title: "Autorización para participación en grupos de WhatsApp",
+            step4Title: "Autorizaciones y Consentimiento",
             step4Content: `1. Propósito del Grupo:
 Este grupo se crea con el propósito de Organizar y coordinar el trabajo de la Asociación.
 
@@ -150,10 +156,63 @@ Entiendo y acepto que las imágenes y vídeos en los que aparezco son propiedad 
 AJPD se compromete a utilizar mi imagen y/o voz de manera respetuosa y profesional, asegurando que su uso no afectará mi honor, dignidad o reputación.
 
 5. Revocación de la Autorización:
-Podré revocar esta autorización en cualquier momento, mediante notificación por escrito a AJPD, entendiendo que dicha revocación no tendrá efectos retroactivos sobre el material ya publicado o distribuido. por medio del presente documento otorgo mi autorización expresa y voluntaria a la Asociación Juvenil Proyecto Dubini (AJPD), con domicilio fiscal en Calle Leopoldo de la Rosa Olivera, 1, 38206, San Cristóbal de La Laguna, para el uso de mi imagen y/o voz en fotografías, vídeos, grabaciones y cualquier otro medio audiovisual, conforme a las siguientes condiciones:`,
-            step6Title: "Foto del Asociado",
+Podré revocar esta autorización en cualquier momento, mediante notificación por escrito a AJPD, entendiendo que dicha revocación no tendrá efectos retroactivos sobre el material ya publicado o distribuido.`,
+            authWspTitle: "WhatsApp",
+            authImagenTitle: "Protección de Imagen",
+            authImagenContent: `Por medio del presente formulario otorgo mi autorización expresa y voluntaria a la Asociación Juvenil Proyecto Dubini (AJPD), con domicilio fiscal en Calle Leopoldo de la Rosa Olivera, 1, 38206, San Cristóbal de La Laguna, para el uso de mi imagen y/o voz en fotografías, vídeos, grabaciones y cualquier otro medio audiovisual, conforme a las siguientes condiciones:
+
+1. Finalidad de Uso:
+Autorizo a AJPD a utilizar mi imagen y/o voz para los siguientes propósitos:
+- Publicidad y promoción de actividades y eventos organizados por AJPD.
+- Publicaciones en medios impresos y digitales (páginas web, redes sociales, etc.).
+- Material educativo y/o formativo.
+- Exhibiciones en eventos, ferias y exposiciones.
+- Otros usos relacionados con las actividades de AJPD.
+
+2. Duración y Alcance:
+Esta autorización es de carácter indefinido y tiene validez en todo el territorio nacional e internacional, sin restricciones temporales ni geográficas.
+
+3. Derechos de Propiedad:
+Entiendo y acepto que las imágenes y vídeos en los que aparezco son propiedad exclusiva de AJPD, y que esta puede editarlos, modificarlos y reproducirlos conforme a sus necesidades, sin que ello implique derecho a retribución económica alguna a mi favor.
+
+4. Confidencialidad:
+AJPD se compromete a utilizar mi imagen y/o voz de manera respetuosa y profesional, asegurando que su uso no afectará mi honor, dignidad o reputación.
+
+5. Revocación de la Autorización:
+Podré revocar esta autorización en cualquier momento, mediante notificación por escrito a AJPD, entendiendo que dicha revocación no tendrá efectos retroactivos sobre el material ya publicado o distribuido.`,
+            authDatosTitle: "Datos y Plataformas de Gestión",
+            authDatosContent: `Por medio del presente, otorgo mi autorización expresa y voluntaria a la Asociación Juvenil Proyecto Dubini (AJPD), con domicilio fiscal en Calle Leopoldo de la Rosa Olivera, 1, 38206, San Cristóbal de La Laguna, para el tratamiento de mis datos personales conforme a las siguientes condiciones y de acuerdo con lo establecido en el Reglamento General de Protección de Datos (RGPD), la Ley Orgánica de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD) y demás normativa española vigente en materia de protección de datos:
+
+Finalidad del Tratamiento:
+Autorizo a AJPD a recopilar, almacenar, organizar y utilizar mis datos personales exclusivamente para los siguientes fines:
+- Gestión administrativa y organizativa de actividades, proyectos y eventos desarrollados por AJPD.
+- Control interno, coordinación y comunicación con participantes, socios, voluntariado o colaboradores.
+- Elaboración de listados, registros y bases de datos internas relacionadas con la actividad de AJPD.
+- Gestión documental, contable y de cumplimiento de obligaciones legales y organizativas.
+- Uso de plataformas digitales y aplicaciones de gestión necesarias para el correcto funcionamiento interno de AJPD.
+
+Cesión y Acceso a Terceras Aplicaciones:
+Autorizo a AJPD a alojar, almacenar o tratar mis datos mediante servicios y aplicaciones de terceros (como plataformas de gestión, almacenamiento en la nube, formularios, correo electrónico o herramientas organizativas), siempre que dicho tratamiento tenga exclusivamente fines internos, administrativos y de gestión relacionados con la actividad de AJPD, garantizando en todo momento el cumplimiento de la normativa vigente en materia de protección de datos.
+
+AJPD se compromete a seleccionar proveedores que ofrezcan garantías adecuadas de seguridad y confidencialidad conforme al RGPD y la legislación española aplicable.
+
+Duración y Conservación de los Datos:
+Mis datos personales serán conservados durante el tiempo necesario para cumplir con las finalidades descritas y mientras exista relación con AJPD o una obligación legal que justifique su conservación.
+
+Confidencialidad y Seguridad:
+AJPD se compromete a tratar mis datos de forma confidencial, lícita y segura, adoptando las medidas técnicas y organizativas necesarias para evitar su pérdida, alteración, acceso no autorizado o tratamiento indebido.
+
+Derechos de la Persona Interesada:
+Entiendo que podré ejercer en cualquier momento mis derechos de acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad de mis datos, mediante solicitud escrita dirigida a AJPD, conforme a lo previsto en la normativa vigente.
+
+Revocación del Consentimiento:
+Podré revocar esta autorización en cualquier momento mediante notificación escrita a AJPD, sin que ello afecte a la licitud del tratamiento realizado con anterioridad a dicha revocación.`,
+
+            lblAccept: "Acepto todo lo anterior",
+            lblDeny: "Deniego todo lo anterior",
+            step5Title: "Foto del Asociado",
             helpPhotoFiles: "Sube una foto tipo Carnet, donde seas fácilmente reconocible. (En caso de que hayas rechazado la autorización de derechos de imagen, esta servirá para identificarte y prevenir tu inclusión en nuestras redes sociales) Si tienes cualquier problema, manda la foto por correo a Secretaria@proyectodubini.org. Sube 1 archivo compatible. Tamaño máximo: 10 MB.",
-            step7Title: "¡Gracias!",
+            step6Title: "¡Gracias!",
             lblComentarios: "¿Algo que comentarnos?",
             btnNext: "Siguiente",
             btnPrev: "Atrás",
@@ -168,8 +227,8 @@ Podré revocar esta autorización en cualquier momento, mediante notificación p
         en: {
             title: "Inscription Form",
             step1Title: "Seleccione su idioma / Select your language",
-            step2Title: "Being a Member of the Dubini Project Youth Association (AJPD)",
-            step2Content: `Joining the Dubini Project Youth Association (AJPD) is more than just becoming part of a group; it is committing to a journey of personal and collective growth. As a member, you will integrate into a dynamic and passionate community focused on making a positive impact both on its members and on society. Here’s what being a member entails:
+            step2Title: "Being a Member of the Asociación Juvenil Proyecto Dubini (AJPD)",
+            step2Content: `Joining the Asociación Juvenil Proyecto Dubini (AJPD) is more than just becoming part of a group; it is committing to a journey of personal and collective growth. As a member, you will integrate into a dynamic and passionate community focused on making a positive impact both on its members and on society. Here’s what being a member entails:
 
 Founding or Full Members will have the following rights:
 a) Enjoy the services and benefits of the Association.
@@ -195,11 +254,18 @@ This corresponds to the statutes.`,
             lblTelefono: "Phone number with prefix *",
             lblDocumento: "ID Document (DNI/NIE/Passport) *",
             lblPais: "Country *",
-            lblDireccion: "Full Address *",
+            lblDireccionCalle: "Street/Road *",
+            lblDireccionNumero: "Number *",
+            lblDireccionPuerta: "Door",
+            lblDireccionResto: "Additional Address",
+            lblDireccionCP: "Postal Code *",
+            lblDireccionProvincia: "Province",
+            lblDireccionCiudad: "City/Town *",
             lblOcupacion: "Study Center / Occupation *",
             lblFechaNac: "Date of Birth *",
-            step4Title: "Authorization for WhatsApp Group Participation",
-            step4Content: `1. Group Purpose:
+            step4Title: "Authorizations and Consent",
+            authWspTitle: "WhatsApp",
+            authWspContent: `1. Group Purpose:
 This group is created for the purpose of Organizing and coordinating the work of the Association.
 
 2. Member Consent:
@@ -229,10 +295,8 @@ I accept that the group rules may be reviewed and updated with the consensus of 
 
 9. Conflict Resolution:
 I accept the established process for resolving conflicts or misunderstandings among group members.`,
-            lblAccept: "I accept all the above",
-            lblDeny: "I deny all the above",
-            step5Title: "Image Rights Authorization",
-            step5Content: `By means of this form I grant my express and voluntary authorization to the Dubini Project Youth Association (AJPD), with registered office at Calle Leopoldo de la Rosa Olivera, 1, 38206, San Cristóbal de La Laguna, for the use of my image and/or voice in photographs, videos, recordings, and any other audiovisual medium, under the following conditions:
+            authImagenTitle: "Image Protection",
+            authImagenContent: `By means of this form I grant my express and voluntary authorization to the Asociación Juvenil Proyecto Dubini (AJPD), with registered office at Calle Leopoldo de la Rosa Olivera, 1, 38206, San Cristóbal de La Laguna, for the use of my image and/or voice in photographs, videos, recordings, and any other audiovisual medium, under the following conditions:
 
 1. Purpose of Use:
 I authorize AJPD to use my image and/or voice for the following purposes:
@@ -253,9 +317,39 @@ AJPD commits to using my image and/or voice respectfully and professionally, ens
 
 5. Revocation of Authorization:
 I may revoke this authorization at any time by written notification to AJPD, understanding that such revocation will not have retroactive effects on material already published or distributed.`,
-            step6Title: "Member's Photo",
+            authDatosTitle: "Data and Management Platforms",
+            authDatosContent: `By means of the present, I expressly and voluntarily grant my authorization to the Asociación Juvenil Proyecto Dubini (AJPD), with registered office at Calle Leopoldo de la Rosa Olivera, 1, 38206, San Cristóbal de La Laguna, for the processing of my personal data in accordance with the following conditions and in accordance with the provisions of the General Data Protection Regulation (GDPR), the Organic Law for the Protection of Personal Data and guarantee of digital rights (LOPDGDD) and other Spanish regulations in force on data protection:
+
+Purpose of Processing:
+I authorize AJPD to collect, store, organize and use my personal data exclusively for the following purposes:
+- Administrative and organizational management of activities, projects and events developed by AJPD.
+- Internal control, coordination and communication with participants, partners, volunteers or collaborators.
+- Preparation of lists, records and internal databases related to AJPD's activity.
+- Document management, accounting and compliance with legal and organizational obligations.
+- Use of digital platforms and management applications necessary for the proper internal functioning of AJPD.
+
+Transfer and Access to Third-Party Applications:
+I authorize AJPD to host, store or process my data through third-party services and applications (such as management platforms, cloud storage, forms, email or organizational tools), provided that such processing is exclusively for internal, administrative and management purposes related to AJPD's activity, guaranteeing at all times compliance with current data protection regulations.
+
+AJPD commits to selecting providers that offer adequate guarantees of security and confidentiality in accordance with the GDPR and applicable Spanish legislation.
+
+Duration and Data Conservation:
+My personal data will be kept for the time necessary to fulfill the purposes described and while there is a relationship with AJPD or a legal obligation that justifies its conservation.
+
+Confidentiality and Security:
+AJPD commits to processing my data in a confidential, lawful and secure manner, adopting the necessary technical and organizational measures to prevent its loss, alteration, unauthorized access or misuse.
+
+Rights of the Data Subject:
+I understand that I may exercise at any time my rights of access, rectification, erasure, opposition, limitation of processing and portability of my data, through a written request addressed to AJPD, in accordance with current regulations.
+
+Revocation of Consent:
+I may revoke this authorization at any time by written notification to AJPD, without affecting the legality of the processing carried out prior to such revocation.`,
+
+            lblAccept: "I accept all the above",
+            lblDeny: "I deny all the above",
+            step5Title: "Member's Photo",
             helpPhotoFiles: "Upload a passport-style photo where you are easily recognizable. (If you denied the image rights authorization, this will serve to identify you and prevent your inclusion in our social networks). If you have any problems, send the photo by email to Secretaria@proyectodubini.org. Upload 1 compatible file. Maximum size: 10 MB.",
-            step7Title: "Thank you!",
+            step6Title: "Thank you!",
             lblComentarios: "Anything to tell us?",
             btnNext: "Next",
             btnPrev: "Back",
@@ -285,24 +379,31 @@ I may revoke this authorization at any time by written notification to AJPD, und
         document.getElementById('lbl-telefono').innerText = t.lblTelefono;
         document.getElementById('lbl-documento').innerText = t.lblDocumento;
         document.getElementById('lbl-pais').innerText = t.lblPais;
-        document.getElementById('lbl-direccion').innerText = t.lblDireccion;
+        document.getElementById('lbl-direccion-calle').innerText = t.lblDireccionCalle;
+        document.getElementById('lbl-direccion-numero').innerText = t.lblDireccionNumero;
+        document.getElementById('lbl-direccion-puerta').innerText = t.lblDireccionPuerta;
+        document.getElementById('lbl-direccion-resto').innerText = t.lblDireccionResto;
+        document.getElementById('lbl-direccion-cp').innerText = t.lblDireccionCP;
+        document.getElementById('lbl-direccion-provincia').innerText = t.lblDireccionProvincia;
+        document.getElementById('lbl-direccion-ciudad').innerText = t.lblDireccionCiudad;
         document.getElementById('lbl-ocupacion').innerText = t.lblOcupacion;
         document.getElementById('lbl-fecha-nac').innerText = t.lblFechaNac;
 
         document.getElementById('step4-title').innerText = t.step4Title;
-        document.getElementById('step4-content').innerText = t.step4Content;
-        document.getElementById('lbl-wsp-accept').innerText = t.lblAccept;
-        document.getElementById('lbl-wsp-deny').innerText = t.lblDeny;
+        document.getElementById('auth-wsp-title').innerText = t.authWspTitle;
+        document.getElementById('auth-wsp-text').innerText = t.authWspContent || t.step4Content;
+        document.getElementById('auth-imagen-title').innerText = t.authImagenTitle;
+        document.getElementById('auth-imagen-text').innerText = t.authImagenContent;
+        document.getElementById('auth-datos-title').innerText = t.authDatosTitle;
+        document.getElementById('auth-datos-text').innerText = t.authDatosContent;
+        
+        const scrollWarningText = document.getElementById('scroll-warning-text');
+        if (scrollWarningText) scrollWarningText.innerText = t.scrollWarning;
 
         document.getElementById('step5-title').innerText = t.step5Title;
-        document.getElementById('step5-content').innerText = t.step5Content;
-        document.getElementById('lbl-img-accept').innerText = t.lblAccept;
-        document.getElementById('lbl-img-deny').innerText = t.lblDeny;
-
-        document.getElementById('step6-title').innerText = t.step6Title;
         document.getElementById('help-photo-files').innerText = t.helpPhotoFiles;
 
-        document.getElementById('step7-title').innerText = t.step7Title;
+        document.getElementById('step6-title').innerText = t.step6Title;
         document.getElementById('lbl-comentarios').innerText = t.lblComentarios;
 
         document.getElementById('btn-next-text').innerText = t.btnNext;
@@ -329,12 +430,14 @@ I may revoke this authorization at any time by written notification to AJPD, und
 
     // Inicializar idioma por defecto
     setLanguage(currentLang);
+    initializeAuthorizationSections();
 
     // Escuchar cambio de idioma
     const langRadios = document.querySelectorAll('input[name="language"]');
     langRadios.forEach(radio => {
         radio.addEventListener('change', (e) => {
             setLanguage(e.target.value);
+            initializeAuthorizationSections();
         });
     });
 
@@ -375,6 +478,11 @@ I may revoke this authorization at any time by written notification to AJPD, und
             submitBtn.style.display = 'none';
         }
         
+        // Reinitialize authorization sections when step 4 is shown
+        if (currentStep === 4) {
+            initializeAuthorizationSections();
+        }
+        
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -383,13 +491,83 @@ I may revoke this authorization at any time by written notification to AJPD, und
         const inputs = currentStepEl.querySelectorAll('input[required], select[required], textarea[required]');
         
         let isValid = true;
+        
+        // Standard HTML5 validation for required fields
         inputs.forEach(input => {
             if (!input.checkValidity()) {
                 input.reportValidity();
                 isValid = false;
             }
         });
+        
+        // Custom validation for Step 3 (Address)
+        if (currentStep === 3) {
+            const calleinput = document.getElementById('direccion_calle');
+            const numeroInput = document.getElementById('direccion_numero');
+            const cpInput = document.getElementById('direccion_codigo_postal');
+            const ciudadInput = document.getElementById('direccion_ciudad');
+            
+            // Validate postal code (basic pattern: at least 3 characters, alphanumeric)
+            const cpValue = cpInput ? cpInput.value.trim() : '';
+            if (cpValue && !/^[a-zA-Z0-9]{3,}$/.test(cpValue)) {
+                cpInput.reportValidity();
+                isValid = false;
+            }
+        }
+        
+        // Custom validation for Step 4 (Authorizations)
+        if (currentStep === 4) {
+            const wspCheckbox = document.getElementById('auth_whatsapp_checkbox');
+            const imagenCheckbox = document.getElementById('auth_imagen_checkbox');
+            const datosCheckbox = document.getElementById('auth_datos_checkbox');
+            
+            // Check if all authorizations are accepted
+            if (!wspCheckbox || !wspCheckbox.checked) {
+                alert(currentLang === 'es' ? 'Debe aceptar la autorización de WhatsApp' : 'You must accept the WhatsApp authorization');
+                isValid = false;
+            }
+            if (!imagenCheckbox || !imagenCheckbox.checked) {
+                alert(currentLang === 'es' ? 'Debe aceptar la protección de imagen' : 'You must accept the image protection');
+                isValid = false;
+            }
+            if (!datosCheckbox || !datosCheckbox.checked) {
+                alert(currentLang === 'es' ? 'Debe aceptar el tratamiento de datos' : 'You must accept the data processing');
+                isValid = false;
+            }
+        }
+        
         return isValid;
+    }
+
+    // Authorization sections toggling
+    function initializeAuthorizationSections() {
+        const authSections = document.querySelectorAll('.authorization-section');
+        
+        authSections.forEach(section => {
+            const header = section.querySelector('.authorization-header');
+            const content = section.querySelector('.authorization-content');
+            const checkbox = section.querySelector('input[type="checkbox"]');
+            const label = section.querySelector('.section-title');
+            
+            // Allow checkbox to be clicked independently to check/uncheck
+            if (checkbox) {
+                checkbox.disabled = false;
+                checkbox.style.cursor = 'pointer';
+                // Add click listener to checkbox to prevent toggle when clicking the checkbox itself
+                checkbox.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            }
+            
+            // Toggle section expansion on label/icon click only (not checkbox)
+            header.addEventListener('click', (e) => {
+                // Only toggle if clicking on label or icon, not the checkbox
+                if (e.target.closest('.section-title') || e.target.closest('.toggle-icon')) {
+                    content.classList.toggle('collapsed');
+                    header.classList.toggle('expanded');
+                }
+            });
+        });
     }
 
     nextBtn.addEventListener('click', () => {
