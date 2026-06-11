@@ -8,6 +8,8 @@
 .program-card {
   justify-self: center;
   width: 280px;
+  text-align: center !important;
+  margin: 0 auto !important;
 }
 
 .featured-section .program-card img,

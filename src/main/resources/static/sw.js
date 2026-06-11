@@ -1,4 +1,4 @@
-const VERSION = "v31";
+const VERSION = "v32";
 const CACHE_NAME = `ajpd-static-cache-${VERSION}`;
 const MUSEO_CACHE_NAME = "ajpd-museo-assets";
 
@@ -29,7 +29,7 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  const url = new URL(event.request.url); 
+  const url = new URL(event.request.url);
 
   // Imágenes del museo (Supabase o GitHub)
   const isOldSupabase = url.href.startsWith("https://mcybqxqlujczgclidnar.supabase.co/storage/v1/object/public/ajpd-storage/");
@@ -62,7 +62,7 @@ self.addEventListener("fetch", (event) => {
   if (
     event.request.destination === "image" &&
     (url.href.includes("/storage/v1/object/public/ajpd-storage/hero/") ||
-     url.href.includes("/storage/v1/object/public/ajpd-storage/slider/"))
+      url.href.includes("/storage/v1/object/public/ajpd-storage/slider/"))
   ) {
     event.respondWith(fetch(event.request));
     return;
@@ -72,7 +72,7 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       caches.open(CACHE_NAME).then((cache) => {
         return cache.match(event.request).then((cached) => {
-          if (cached) return cached; 
+          if (cached) return cached;
 
           return fetch(event.request)
             .then((networkResponse) => {
