@@ -18,7 +18,7 @@
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
 
-    <main role="main" class="join-main">
+    <main role="main" id="main-content" class="join-main">
         <section class="wizard-section animate-fadeIn">
             <div class="container">
                 <div class="wizard-container">
@@ -176,7 +176,7 @@
                             <div class="authorization-section">
                                 <div class="authorization-header">
                                     <input type="checkbox" id="auth_whatsapp_checkbox" name="auth_whatsapp" value="accept">
-                                    <label class="section-title">
+                                    <label class="section-title" for="auth_whatsapp_checkbox">
                                         <span id="auth-wsp-title">WhatsApp</span>
                                         <i class="fas fa-chevron-down toggle-icon"></i>
                                     </label>
@@ -190,7 +190,7 @@
                             <div class="authorization-section">
                                 <div class="authorization-header">
                                     <input type="checkbox" id="auth_imagen_checkbox" name="auth_imagen" value="accept">
-                                    <label class="section-title">
+                                    <label class="section-title" for="auth_imagen_checkbox">
                                         <span id="auth-imagen-title">Protección de Imagen</span>
                                         <i class="fas fa-chevron-down toggle-icon"></i>
                                     </label>
@@ -204,7 +204,7 @@
                             <div class="authorization-section">
                                 <div class="authorization-header">
                                     <input type="checkbox" id="auth_datos_checkbox" name="auth_datos" value="accept">
-                                    <label class="section-title">
+                                    <label class="section-title" for="auth_datos_checkbox">
                                         <span id="auth-datos-title">Datos y Plataformas de Gestión</span>
                                         <i class="fas fa-chevron-down toggle-icon"></i>
                                     </label>

@@ -7,7 +7,7 @@
     <meta name="description" content="Contacta con AJPD - Asociación Juvenil Proyecto Dubini. Estamos aquí para escucharte y colaborar juntos.">
 
     <title>Contacto - AJPD</title>
-    <link rel="stylesheet" href="/styles/contact.css">
+    <link rel="stylesheet" href="/styles/pages/contact.css">
     <link rel="stylesheet" href="/styles/layout/header.css">
     <link rel="stylesheet" href="/styles/layout/footer.css">
     <link rel="stylesheet" href="/styles/components/content.css">
@@ -19,7 +19,7 @@
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
 
-    <main role="main">
+    <main role="main" id="main-content">
         <section class="contact-section">
             <div class="container">
                 <div class="contact-grid">
@@ -28,21 +28,21 @@
                         <h1>Ponte en Contacto</h1>
                         <div class="info-items">
                             <div class="info-item">
-                                <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                                <div class="icon-box" aria-hidden="true"><i class="fas fa-envelope"></i></div>
                                 <div>
                                     <h3>Email</h3>
                                     <a href="mailto:contacto@proyectodubini.org">contacto@proyectodubini.org</a>
                                 </div>
                             </div>
                             <div class="info-item">
-                                <div class="icon-box"><i class="fab fa-instagram"></i></div>
+                                <div class="icon-box" aria-hidden="true"><i class="fab fa-instagram"></i></div>
                                 <div>
                                     <h3>Instagram</h3>
                                     <a href="https://instagram.com/proyectodubini" target="_blank">@proyectodubini</a>
                                 </div>
                             </div>
                             <div class="info-item">
-                                <div class="icon-box"><i class="fab fa-tiktok"></i></div>
+                                <div class="icon-box" aria-hidden="true"><i class="fab fa-tiktok"></i></div>
                                 <div>
                                     <h3>TikTok</h3>
                                     <a href="https://tiktok.com/@proyectodubini" target="_blank">@proyectodubini</a>
@@ -91,7 +91,7 @@
                                 <i class="fas fa-paper-plane"></i>
                             </button>
                         </form>
-                        <div id="formStatus" class="form-status"></div>
+                        <div id="formStatus" class="form-status" aria-live="polite"></div>
                     </div>
                 </div>
             </div>

@@ -1,12 +1,12 @@
 /* Footer */
 .main-footer {
   position: relative;
-  background: linear-gradient(rgba(16, 35, 78, 0.95), rgba(16, 35, 78, 0.95)),
+  background: linear-gradient(rgba(16, 35, 78, 0.96), rgba(16, 35, 78, 0.96)),
     url("https://mcybqxqlujczgclidnar.supabase.co/storage/v1/object/public/ajpd-storage/nav.webp");
   background-size: cover;
   background-position: center;
   color: white;
-  padding: 3rem 1rem;
+  padding: 4rem 1.5rem 3rem;
   margin-top: auto;
   z-index: 2;
 }
@@ -23,7 +23,7 @@
   -webkit-backdrop-filter: blur(8px);
   z-index: 1;
   opacity: 0.8;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-fast) ease;
   box-shadow: 0 -20px 20px -20px rgba(16, 35, 78, 0.4);
 }
 
@@ -50,6 +50,8 @@
 .footer-section h2 {
   margin-bottom: 1.5rem;
   font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-peach);
 }
 
 .social-links {
@@ -67,7 +69,7 @@
 .social-links a {
   color: white;
   font-size: 1.8rem;
-  transition: all 0.3s ease;
+  transition: all var(--transition-fast) ease;
 }
 
 .social-links a:hover {
@@ -79,7 +81,7 @@
   width: 100%;
   height: 200px;
   background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border-radius: var(--border-radius-sm);
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
@@ -91,12 +93,35 @@
 }
 
 .legal-links a {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9); /* Mejor contraste de a11y */
   text-decoration: none;
   font-size: 0.95rem;
-  transition: color 0.3s ease;
+  transition: color var(--transition-fast) ease;
 }
 
 .legal-links a:hover {
   color: var(--color-accent);
+  text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+  .legal-links {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-container {
+    justify-content: center;
+    justify-items: center;
+    padding-bottom: 1rem;
+  }
+  .footer-section {
+    text-align: center;
+  }
+  .main-footer {
+    padding: 2.5rem 1rem 1.5rem;
+  }
+  .footer-section.location.animate-fadeIn {
+    display: none;
+  }
+}
+

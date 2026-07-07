@@ -1,0 +1,80 @@
+.program-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  justify-content: center !important;
+  gap: 20px !important;
+  text-align: center;
+}
+.program-card {
+  justify-self: center;
+  width: 280px !important;
+  text-align: center !important;
+  margin: 0 auto !important;
+  padding: 1.5rem !important; /* Force simple padding overriding content.css content structure */
+  flex-direction: column !important; /* Ensure content is stacked vertically */
+  display: flex !important;
+  height: auto !important;
+}
+
+.program-card::after {
+  display: none !important; /* Disable any hover highlights */
+}
+
+.program-card:hover {
+  transform: none !important; /* Prevent news cards movement animations */
+}
+
+.featured-section .program-card img,
+.program-cards .program-card img {
+  width: 180px !important;
+  height: 180px !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+  aspect-ratio: 1 / 1 !important;
+  margin: 0 auto 1rem !important;
+  display: block;
+  position: relative;
+  z-index: 5;
+  transform: none !important; /* Override zoom scale hover effects */
+}
+
+/* Evitar que se aplique la clase de envoltura de imagen de noticias en directorate */
+.program-card .program-card-image-wrapper {
+  display: contents !important;
+}
+
+.featured-section h1 {
+  position: relative;
+  z-index: 2;
+  font-size: 3rem;
+  text-align: center;
+}
+.member-email {
+  font-size: 0.85rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  display: block;
+  margin-top: 0.5rem;
+  transition: opacity 0.3s ease;
+  text-align: center;
+}
+
+.member-email:hover {
+  opacity: 0.8;
+}
+
+.member-email i {
+  margin-right: 5px;
+}
+
+/* Estilos para el texto de rol (Presidenta de Honor / Presidente) en la junta */
+.program-card .learn-more {
+  display: block !important;
+  margin-top: 1rem !important;
+  text-align: center !important;
+  color: var(--color-text-muted) !important;
+  font-weight: 500 !important;
+  font-size: 0.9rem !important;
+  pointer-events: none !important; /* Es solo una etiqueta de texto en esta página */
+  transform: none !important; /* Override hover transformations */
+}

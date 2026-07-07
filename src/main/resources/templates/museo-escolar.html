@@ -7,24 +7,24 @@
     <meta name="description" content="AJPD - Museo Escolar Jardín Botánico IES San Benito.">
 
     <title>AJPD - Museo Escolar Jardín Botánico IES San Benito</title>
-    <link rel="stylesheet" href="/styles/museo-escolar.css">
+    <link rel="stylesheet" href="/styles/pages/museo-escolar.css">
     <link rel="stylesheet" href="/styles/layout/header.css">
     <link rel="stylesheet" href="/styles/layout/footer.css">
     <link rel="stylesheet" href="/styles/components/content.css">
     <link rel="stylesheet" href="/styles/components/wsp-icon.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/styles/base.css">
-    <link rel="stylesheet" href="/styles/museo-theme.css">
-    <link rel="stylesheet" href="/styles/museo-escolar-form.css">
+    <link rel="stylesheet" href="/styles/pages/museo-theme.css">
+    <link rel="stylesheet" href="/styles/pages/museo-escolar-form.css">
 </head>
 
 <body class="museo-theme">
     <header th:replace="~{fragments/header :: header}"></header>
-    <main role="main">
+    <main role="main" id="main-content">
         <section class="featured-section">
             <div class="container museo-content">
                 <img src="https://mcybqxqlujczgclidnar.supabase.co/storage/v1/object/public/ajpd-storage/museo-virtual/logo-museo.png" alt="Logo Jardín Botánico" class="museo-logo">
-                <h2>Museo Escolar Jardín Botánico IES San Benito</h2>
+                <h1>Museo Escolar Jardín Botánico IES San Benito</h1>
                 <div class="museo-gallery">
                     <img class="museo-image"
                         src="https://mcybqxqlujczgclidnar.supabase.co/storage/v1/object/public/ajpd-storage/museo-escolar/folleto1.webp"
@@ -33,7 +33,9 @@
                         src="https://mcybqxqlujczgclidnar.supabase.co/storage/v1/object/public/ajpd-storage/museo-escolar/folleto2.webp"
                         alt="Folleto 2 del Museo Escolar Jardín Botánico IES San Benito" loading="lazy">
                 </div>
-                <a href="/museo-escolar-jardin-botanico-ies-san-benito/museo-virtual" class="museo-virtual-btn">Visitar museo virtual</a>
+                <div class="museo-virtual-btn-container">
+                    <a href="/museo-escolar-jardin-botanico-ies-san-benito/museo-virtual" class="museo-virtual-btn">Visitar museo virtual</a>
+                </div>
                 <div class="video-container">
                     <iframe src="https://www.youtube.com/embed/s6aJiloAEs8" title="Visita Virtual Museo Escolar" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
                 </div>

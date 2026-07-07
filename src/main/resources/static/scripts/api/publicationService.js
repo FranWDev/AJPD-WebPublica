@@ -14,18 +14,34 @@ export async function normalizeTitle(title) {
         .trim();
 }
 
-export async function fetchNewsByTitle(urlTitle) {
+let titleCacheMap = null;
+let lastCachedNewsSource = null;
 
+async function getTitleCacheMap(cachedNews) {
+    if (titleCacheMap && lastCachedNewsSource === cachedNews) {
+        return titleCacheMap;
+    }
+    const map = new Map();
+    for (const news of cachedNews) {
+        if (news.title) {
+            const normalized = await normalizeTitle(news.title);
+            map.set(normalized, news);
+        }
+    }
+    titleCacheMap = map;
+    lastCachedNewsSource = cachedNews;
+    return map;
+}
+
+export async function fetchNewsByTitle(urlTitle) {
     const cachedNews = CacheService.getNewsFromCache();
     
     if (cachedNews && Array.isArray(cachedNews)) {
         const normalizedUrlTitle = await normalizeTitle(urlTitle);
-        
-        for (const news of cachedNews) {
-            const normalizedNewsTitle = await normalizeTitle(news.title);
-            if (normalizedNewsTitle === normalizedUrlTitle) {
-                return news;
-            }
+        const map = await getTitleCacheMap(cachedNews);
+        const found = map.get(normalizedUrlTitle);
+        if (found) {
+            return found;
         }
     }
     

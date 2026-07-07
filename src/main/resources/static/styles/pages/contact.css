@@ -129,17 +129,17 @@
 .form-group textarea {
   padding: 0.8rem 1rem;
   border: 2px solid #eee;
-  border-radius: 10px;
+  border-radius: var(--border-radius-sm);
   font-family: inherit;
   font-size: 1rem;
   transition: var(--transition-fast);
-  outline: none;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: var(--color-secondary);
-  box-shadow: 0 0 0 4px rgba(202, 67, 83, 0.1);
+.form-group input:focus-visible,
+.form-group textarea:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 1px;
+  border-color: var(--color-accent);
 }
 
 .submit-btn {

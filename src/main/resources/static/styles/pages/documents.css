@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Estilos de la Página de Documentos Institucionales
+   ========================================================================== */
+
+.page-hero-content p {
+  color: var(--color-text-muted);
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+.page-hero-content iframe {
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
+  max-width: 900px;
+  width: 100%;
+  margin: 1.5rem auto 0;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .page-hero-content iframe {
+    height: 450px;
+  }
+}

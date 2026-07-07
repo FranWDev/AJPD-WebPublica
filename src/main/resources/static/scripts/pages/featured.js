@@ -14,10 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
     article.setAttribute("aria-hidden", "true");
     article.innerHTML = `
       <div class="skeleton-image"></div>
-      <div class="skeleton-line skeleton-line-title"></div>
-      <div class="skeleton-line"></div>
-      <div class="skeleton-line skeleton-line-short"></div>
-      <div class="skeleton-link"></div>
+      <div class="skeleton-content">
+        <div class="skeleton-line skeleton-title"></div>
+        <div class="skeleton-line skeleton-text-1"></div>
+        <div class="skeleton-line skeleton-text-2"></div>
+        <div class="skeleton-line skeleton-text-3"></div>
+        <div class="skeleton-line skeleton-button"></div>
+      </div>
     `;
     return article;
   };
@@ -38,10 +41,18 @@ document.addEventListener("DOMContentLoaded", () => {
           const normalizedTitle = await normalizeTitle(item.title);
           return `
             <article class="program-card">
-              <img src="${item.imageUrl}" alt="${item.title}">
-              <h3>${item.title}</h3>
-              <p>${item.description}</p>
-              <a href="/noticias-y-actividades/${normalizedTitle}" class="learn-more read-more">Saber más →</a>
+              <div class="program-card-image-wrapper">
+                <img src="${item.imageUrl}" alt="${item.title}">
+              </div>
+              <div class="program-card-content">
+                <h3>${item.title}</h3>
+                <p>${item.description}</p>
+                <div class="program-card-footer">
+                  <a href="/noticias-y-actividades/${normalizedTitle}" class="learn-more read-more">
+                    Saber más <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
             </article>
           `;
         })

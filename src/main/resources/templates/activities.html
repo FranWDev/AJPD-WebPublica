@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/styles/components/hero.css">
     <link rel="stylesheet" href="/styles/components/content.css">
     <link rel="stylesheet" href="/styles/components/wsp-icon.css">
-    <link rel="stylesheet" href="/styles/news.css">
+    <link rel="stylesheet" href="/styles/pages/news.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/styles/base.css">
     <link rel="stylesheet" href="/styles/components/popup.css">
@@ -21,10 +21,14 @@
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
     <main role="main">
-        <h1>Actividades</h1>
-        <div class="program-cards">
-
-        </div>
+        <section class="page-hero">
+            <div class="page-hero-content">
+                <h1>Actividades</h1>
+                <div class="program-cards">
+                    <!-- Se inyectará por JS -->
+                </div>
+            </div>
+        </section>
     </main>
     <div th:replace="~{fragments/wsp-icon :: wsp-icon}"></div>
     <div th:replace="~{fragments/footer :: footer}"></div>
