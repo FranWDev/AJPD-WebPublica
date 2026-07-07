@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="/styles/layout/footer.css">
     <link rel="stylesheet" href="/styles/components/content.css">
     <link rel="stylesheet" href="/styles/components/wsp-icon.css">
-    <link rel="stylesheet" href="/styles/museo-virtual.css">
+    <link rel="stylesheet" href="/styles/pages/museo-virtual.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/styles/base.css">
-    <link rel="stylesheet" href="/styles/museo-theme.css">
+    <link rel="stylesheet" href="/styles/pages/museo-theme.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/markers-plugin/index.min.css" />
@@ -31,11 +31,11 @@
 
 <body class="museo-theme">
     <header th:replace="~{fragments/header :: header}"></header>
-    <main role="main">
+    <main role="main" id="main-content">
         <section class="featured-section">
             <div class="container museo-virtual-content">
                 <img src="https://mcybqxqlujczgclidnar.supabase.co/storage/v1/object/public/ajpd-storage/museo-virtual/logo-museo.png" alt="Logo Jardín Botánico" class="museo-logo">
-                <h2>Museo Virtual</h2>
+                <h1>Museo Virtual</h1>
                 <p>¡Bienvenido al <strong>recorrido virtual interactivo!</strong> Explora nuestro jardín botánico utilizando el visor 360 de abajo.</p>
                 <p>Para navegar, busca los <strong>puntos de desplazamiento</strong> (iconos circulares) e interactúa con ellos para moverte entre las diferentes escenas. 
                     Puedes arrastrar la imagen para mirar a tu alrededor y utilizar el zoom para apreciar los detalles. <br>Además, <strong>en dispositivos móviles o táctiles, mantén pulsado el nombre de una planta</strong> para mostrar mas información sobre ella.</p>

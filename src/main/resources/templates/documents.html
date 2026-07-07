@@ -7,7 +7,8 @@
 
         <title>AJPD - Documentos institucionales</title>
         <link rel="stylesheet" href="/styles/layout/header.css">
-        <link rel="stylesheet" href="/styles/documents.css">
+        <link rel="stylesheet" href="/styles/pages/documents.css">
+        <link rel="stylesheet" href="/styles/pages/news.css">
         <link rel="stylesheet" href="/styles/layout/footer.css">
         <link rel="stylesheet" href="/styles/components/hero.css">
         <link rel="stylesheet" href="/styles/components/content.css">
@@ -17,25 +18,24 @@
     </head>
     <body>
         <header th:replace="~{fragments/header :: header}"></header>
-        <main role="main">
-            <section class="hero">
-                <div class="hero-content">
-                    <h2>Documentos institucionales
-                        <h2>
-                            <p>Estatutos</p>
-                            <iframe
-                                src="/assets/documents/estatutos-dubini.pdf"
-                                width="100%"
-                                height="600px"
-                                style="border: none;"
-                            >
-                                Este navegador no soporta PDFs. Descárgalo
-                                <a href="/assets/documents/estatutos-dubini.pdf" target="_blank">aquí</a>
-                                .
-                            </iframe>
-                        </div>
-                    </section>
-                </main>
+        <main role="main" id="main-content">
+            <section class="page-hero">
+                <div class="page-hero-content">
+                    <h1>Documentos institucionales</h1>
+                    <p>Estatutos</p>
+                    <iframe
+                        src="/assets/documents/estatutos-dubini.pdf"
+                        width="100%"
+                        height="600px"
+                        style="border: none;"
+                        title="Estatutos de la Asociación Juvenil Proyecto Dubini"
+                    >
+                        Este navegador no soporta PDFs. Descárgalo
+                        <a href="/assets/documents/estatutos-dubini.pdf" target="_blank">aquí</a>.
+                    </iframe>
+                </div>
+            </section>
+        </main>
                 <div th:replace="~{fragments/wsp-icon :: wsp-icon}"></div>
                 <div th:replace="~{fragments/footer :: footer}"></div>
             </body>

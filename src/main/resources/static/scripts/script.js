@@ -303,6 +303,42 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   initActivitySlider();
 
+  // ── Auto-hide header en móvil (estilo barra de buscador) ──────────────────
+  const header = document.querySelector('.main-header');
+  if (header) {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    function handleHeaderScroll() {
+      const currentScrollY = window.scrollY;
+      const isMobile = window.innerWidth < 768;
+      const menuIsOpen = mobileNav && mobileNav.classList.contains('active');
+
+      if (isMobile && !menuIsOpen) {
+        if (currentScrollY > lastScrollY && currentScrollY > 80) {
+          // Scrolling DOWN → ocultar header
+          header.classList.add('header-hidden');
+        } else {
+          // Scrolling UP → mostrar header
+          header.classList.remove('header-hidden');
+        }
+      } else {
+        // Desktop o menú abierto: siempre visible
+        header.classList.remove('header-hidden');
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(handleHeaderScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
   
 });
 

@@ -2,6 +2,8 @@ package org.dubini.frontend_api.service;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.dubini.frontend_api.cache.CacheWarmable;
 import org.dubini.frontend_api.cache.PersistentCaffeineCacheManager;
@@ -36,6 +38,9 @@ public class NewsService implements CacheWarmable {
     private final CircuitBreakerRegistry circuitBreakerRegistry;
     private final ObjectMapper objectMapper;
 
+    // Mapa para consultas rápidas O(1) en memoria
+    private final Map<String, PublicationDTO> newsByTitleCache = new ConcurrentHashMap<>();
+
     /**
      * Registra y devuelve un CircuitBreaker con configuración explícita
      */
@@ -65,6 +70,12 @@ public class NewsService implements CacheWarmable {
                 .transformDeferred(CircuitBreakerOperator.of(getNewsCircuitBreaker()))
                 .doOnNext(data -> {
                     cache.put(CACHE_KEY, data);
+                    newsByTitleCache.clear();
+                    for (PublicationDTO pub : data) {
+                        if (pub.getTitle() != null) {
+                            newsByTitleCache.put(normalizeTitle(pub.getTitle()), pub);
+                        }
+                    }
                     log.info("Cache warmed up with {} news items", data.size());
                 })
                 .doOnSuccess(v -> {
@@ -110,6 +121,13 @@ public class NewsService implements CacheWarmable {
         List<PublicationDTO> cached = getFromCache(cache);
         if (cached != null && !cached.isEmpty()) {
             log.info("✓ Returning {} news from in-memory cache", cached.size());
+            if (newsByTitleCache.isEmpty()) {
+                for (PublicationDTO pub : cached) {
+                    if (pub.getTitle() != null) {
+                        newsByTitleCache.put(normalizeTitle(pub.getTitle()), pub);
+                    }
+                }
+            }
             return Mono.just(cached);
         }
 
@@ -119,6 +137,12 @@ public class NewsService implements CacheWarmable {
                 .transformDeferred(CircuitBreakerOperator.of(getNewsCircuitBreaker()))
                 .doOnNext(news -> {
                     cache.put(CACHE_KEY, news);
+                    newsByTitleCache.clear();
+                    for (PublicationDTO pub : news) {
+                        if (pub.getTitle() != null) {
+                            newsByTitleCache.put(normalizeTitle(pub.getTitle()), pub);
+                        }
+                    }
                     log.info("Cache updated with {} news items", news.size());
                     if (cacheManager instanceof PersistentCaffeineCacheManager pcm) {
                         pcm.saveCache(CACHE_NAME);
@@ -146,6 +170,12 @@ public class NewsService implements CacheWarmable {
                 log.info("✓ Returning {} news from disk cache", cached.size());
 
                 cache.put(CACHE_KEY, cached);
+                newsByTitleCache.clear();
+                for (PublicationDTO pub : cached) {
+                    if (pub.getTitle() != null) {
+                        newsByTitleCache.put(normalizeTitle(pub.getTitle()), pub);
+                    }
+                }
                 log.info("In-memory cache repopulated with {} news items from disk", cached.size());
 
                 return Mono.just(cached);
@@ -180,23 +210,20 @@ public class NewsService implements CacheWarmable {
         String normalizedRequestTitle = normalizeTitle(title);
         log.debug("Searching for news with normalized title: {}", normalizedRequestTitle);
 
+        PublicationDTO found = newsByTitleCache.get(normalizedRequestTitle);
+        if (found != null) {
+            log.info("✓ Found news with title in O(1): {} (normalized: {})", found.getTitle(),
+                    normalizedRequestTitle);
+            return Mono.just(found);
+        }
+
         return get()
                 .flatMap(newsList -> {
-                    PublicationDTO found = newsList.stream()
-                            .filter(news -> {
-                                if (news.getTitle() == null) {
-                                    return false;
-                                }
-                                String normalizedNewsTitle = normalizeTitle(news.getTitle());
-                                return normalizedNewsTitle.equals(normalizedRequestTitle);
-                            })
-                            .findFirst()
-                            .orElse(null);
-
-                    if (found != null) {
-                        log.info("✓ Found news with title: {} (normalized: {})", found.getTitle(),
+                    PublicationDTO retryFound = newsByTitleCache.get(normalizedRequestTitle);
+                    if (retryFound != null) {
+                        log.info("✓ Found news with title after refresh in O(1): {} (normalized: {})", retryFound.getTitle(),
                                 normalizedRequestTitle);
-                        return Mono.just(found);
+                        return Mono.just(retryFound);
                     } else {
                         log.warn("✗ News with normalized title '{}' not found", normalizedRequestTitle);
                         return Mono.error(new BackofficeException(
@@ -209,6 +236,8 @@ public class NewsService implements CacheWarmable {
         Cache cache = cacheManager.getCache(CACHE_NAME);
         if (cache != null)
             cache.clear();
+
+        newsByTitleCache.clear();
 
         if (cacheManager instanceof PersistentCaffeineCacheManager pcm) {
             pcm.saveCache(CACHE_NAME);

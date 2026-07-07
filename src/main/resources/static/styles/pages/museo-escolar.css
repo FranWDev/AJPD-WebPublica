@@ -1,8 +1,12 @@
+.museo-content h1,
 .museo-content h2 {
   text-align: center;
   color: #1f5a3a;
-  font-size: clamp(1.6rem, 3vw, 2.5rem);
-  margin-bottom: 2rem;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  margin-top: 1rem;
+  margin-bottom: 2.5rem;
+  font-weight: 700;
+  line-height: 1.25;
 }
 
 .museo-content {
@@ -18,16 +22,21 @@
   justify-items: center;
 }
 
+.museo-virtual-btn-container {
+  display: flex;
+  justify-content: center;
+  margin: 3.5rem 0;
+  width: 100%;
+}
+
 .museo-virtual-btn {
-  display: block;
-  width: fit-content;
-  margin: 2.2rem auto 0;
-  padding: 0.95rem 1.9rem;
+  display: inline-block;
+  padding: 1.2rem 2.8rem;
   border-radius: 999px;
   text-decoration: none;
   font-weight: 700;
-  font-size: 1.05rem;
-  letter-spacing: 0.2px;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
   color: #f6fff6;
   background: linear-gradient(135deg, #1f5a3a, #3d935f);
   box-shadow: 0 10px 24px rgba(27, 78, 49, 0.28);
@@ -35,9 +44,9 @@
 }
 
 .museo-virtual-btn:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 14px 30px rgba(23, 71, 43, 0.34);
-  filter: brightness(1.03);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 14px 30px rgba(23, 71, 43, 0.38);
+  filter: brightness(1.05);
 }
 
 .museo-virtual-btn:active {
@@ -58,11 +67,16 @@
     gap: 1.25rem;
   }
 
+  .museo-virtual-btn-container {
+    margin: 2.2rem 0;
+  }
+
   .museo-virtual-btn {
     width: 100%;
     max-width: 340px;
     text-align: center;
-    margin: 2.2rem auto 0;
+    margin: 0;
+    padding: 1.1rem 2rem;
   }
 }
 
