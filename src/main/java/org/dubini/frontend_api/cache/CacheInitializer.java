@@ -2,21 +2,25 @@ package org.dubini.frontend_api.cache;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CacheInitializer {
 
-    private final java.util.List<CacheWarmable> warmables;
+    private final List<CacheWarmable> warmables;
 
     @PostConstruct
     public void init() {
         for (CacheWarmable w : warmables) {
             w.warmUpCache()
-                    .doOnSubscribe(sub -> System.out.println("Regenerando cache: " + w.getCacheName()))
-                    .doOnError(err -> System.err
-                            .println("Error regenerando cache '" + w.getCacheName() + "': " + err.getMessage()))
+                    .doOnSubscribe(sub -> log.info("[CACHE] Inicializando precalentamiento de caché '{}'", w.getCacheName()))
+                    .doOnError(err -> log.error("[CACHE] Falló el precalentamiento de caché '{}': {}", w.getCacheName(), err.getMessage()))
+                    .doOnSuccess(v -> log.info("[CACHE] Precalentamiento completado para caché '{}'", w.getCacheName()))
                     .subscribe();
         }
     }

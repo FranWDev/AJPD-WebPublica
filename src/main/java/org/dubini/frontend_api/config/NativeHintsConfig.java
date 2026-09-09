@@ -122,7 +122,7 @@ public class NativeHintsConfig {
                         MemberCategory.INVOKE_PUBLIC_METHODS,
                         MemberCategory.INVOKE_DECLARED_METHODS);
             } catch (ClassNotFoundException e) {
-                System.err.println("DTO no encontrado: " + className);
+                // Clase DTO no presente en classpath
             }
         }
 
@@ -133,7 +133,7 @@ public class NativeHintsConfig {
                         MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
                         MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS);
             } catch (ClassNotFoundException e) {
-                System.err.println("Exception no encontrada: " + className);
+                // Clase de excepción no presente en classpath
             }
         }
 
@@ -145,7 +145,7 @@ public class NativeHintsConfig {
                         MemberCategory.INVOKE_DECLARED_METHODS,
                         MemberCategory.INVOKE_PUBLIC_METHODS);
             } catch (ClassNotFoundException e) {
-                System.err.println("Controller no encontrado: " + className);
+                // Clase controller no presente en classpath
             }
         }
 
@@ -157,7 +157,7 @@ public class NativeHintsConfig {
                         MemberCategory.INVOKE_DECLARED_METHODS,
                         MemberCategory.INVOKE_PUBLIC_METHODS);
             } catch (ClassNotFoundException e) {
-                System.err.println("Service no encontrado: " + className);
+                // Clase service no presente en classpath
             }
         }
 
@@ -169,7 +169,7 @@ public class NativeHintsConfig {
                         MemberCategory.INVOKE_DECLARED_METHODS,
                         MemberCategory.INVOKE_PUBLIC_METHODS);
             } catch (ClassNotFoundException e) {
-                System.err.println("Config no encontrado: " + className);
+                // Clase config no presente en classpath
             }
         }
 
@@ -192,7 +192,7 @@ public class NativeHintsConfig {
                         MemberCategory.INVOKE_DECLARED_METHODS,
                         MemberCategory.INVOKE_PUBLIC_METHODS);
             } catch (ClassNotFoundException e) {
-                System.err.println("Cache class no encontrada: " + e.getMessage());
+                // Clase de cache no presente en classpath
             }
         }
 
@@ -220,7 +220,7 @@ public class NativeHintsConfig {
                         MemberCategory.INVOKE_DECLARED_METHODS);
 
             } catch (ClassNotFoundException e) {
-                System.err.println("Security class no encontrada: " + e.getMessage());
+                // Clase de security no presente en classpath
             }
         }
 
@@ -234,7 +234,7 @@ public class NativeHintsConfig {
                         Class.forName("org.thymeleaf.spring6.SpringTemplateEngine"),
                         MemberCategory.values());
             } catch (ClassNotFoundException e) {
-                System.err.println("Thymeleaf class no encontrada: " + e.getMessage());
+                // Thymeleaf no presente en classpath
             }
         }
 
@@ -259,7 +259,7 @@ public class NativeHintsConfig {
                         com.fasterxml.jackson.core.type.TypeReference.class,
                         MemberCategory.values());
             } catch (Exception e) {
-                System.err.println("Jackson class issue: " + e.getMessage());
+                // Jackson opcional o no presente
             }
         }
 
@@ -304,7 +304,7 @@ public class NativeHintsConfig {
                 registerClassIfExists(hints, "reactor.netty.resources.ConnectionProvider");
 
             } catch (Exception e) {
-                System.err.println("WebClient class issue: " + e.getMessage());
+                // WebClient opcional o no presente
             }
         }
 
@@ -372,7 +372,7 @@ public class NativeHintsConfig {
                         "io.github.resilience4j.common.retry.configuration.RetryConfigurationProperties$InstanceProperties");
 
             } catch (Exception e) {
-                System.err.println("Resilience4j class issue: " + e.getMessage());
+                // Resilience4j opcional o no presente
             }
         }
 
@@ -397,7 +397,7 @@ public class NativeHintsConfig {
                 registerClassIfExists(hints, "org.springframework.cache.caffeine.CaffeineCache");
 
             } catch (Exception e) {
-                System.err.println("Caffeine class issue: " + e.getMessage());
+                // Caffeine opcional o no presente
             }
         }
 
@@ -428,7 +428,7 @@ public class NativeHintsConfig {
                         MemberCategory.values());
 
             } catch (Exception e) {
-                System.err.println("Supabase class issue: " + e.getMessage());
+                // Supabase opcional o no presente
             }
         }
 
@@ -497,7 +497,7 @@ public class NativeHintsConfig {
                 registerClassIfExists(hints, "org.springframework.validation.beanvalidation.LocalValidatorFactoryBean");
 
             } catch (Exception e) {
-                System.err.println("Validation class issue: " + e.getMessage());
+                // Validation opcional o no presente
             }
         }
 

@@ -105,8 +105,6 @@ public class JwtNativeConfig {
 
             // ============ Recursos JJWT ============
             hints.resources().registerPattern("META-INF/services/io.jsonwebtoken.*");
-
-            System.out.println("✓ JJWT classes registered for Native Image");
         }
 
         private void registerClassIfExists(RuntimeHints hints, String className) {
