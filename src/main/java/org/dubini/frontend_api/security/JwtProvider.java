@@ -21,15 +21,12 @@ public class JwtProvider {
     }
 
     public String generateToken() {
-        @SuppressWarnings("deprecation")
-        String token = Jwts.builder()
-                .setSubject("backoffice")
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
+        return Jwts.builder()
+                .subject("backoffice")
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(key)
                 .compact();
-
-        return token;
     }
 
     public boolean validateToken(String token) {
