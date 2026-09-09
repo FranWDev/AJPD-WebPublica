@@ -32,6 +32,7 @@ public class PersistentCaffeineCacheManager implements CacheManager {
     @PostConstruct
     public void warmUpCachesAsync() {
         List<String> cacheNames = List.of("news");
+        log.info("[CACHE] Iniciando carga asíncrona de cachés persistentes...");
         for (String name : cacheNames) {
             CaffeineCache cache = (CaffeineCache) getCache(name);
             CompletableFuture.runAsync(() -> tryLoadCache(name, cache.getNativeCache()));
@@ -49,7 +50,7 @@ public class PersistentCaffeineCacheManager implements CacheManager {
                     );
                     if (newsList != null && !newsList.isEmpty()) {
                         nativeCache.put(NEWS_CACHE_KEY, newsList);
-                        log.info("Cache '{}' loaded from Supabase ({} news items)", name, newsList.size());
+                        log.info("[CACHE] Caché '{}' cargada exitosamente desde Supabase ({} noticias)", name, newsList.size());
                     }
                 } else {
                     // Carga genérica para otras caches
@@ -58,18 +59,18 @@ public class PersistentCaffeineCacheManager implements CacheManager {
                     );
                     if (data != null && !data.isEmpty()) {
                         data.forEach(nativeCache::put);
-                        log.info("Cache '{}' loaded from Supabase ({} entries)", name, data.size());
+                        log.info("[CACHE] Caché '{}' cargada exitosamente desde Supabase ({} entradas)", name, data.size());
                     }
                 }
             }
         } catch (Exception e) {
-            log.error("Error loading cache '{}' from Supabase: {}", name, e.getMessage(), e);
+            log.error("[CACHE] Error cargando caché '{}' desde Supabase: {}", name, e.getMessage(), e);
         }
     }
 
     @PreDestroy
     public void saveCaches() {
-        log.info("Saving caches to Supabase...");
+        log.info("[CACHE] Persistiendo cachés en Supabase...");
         caches.keySet().forEach(this::saveCache);
     }
 
@@ -87,17 +88,17 @@ public class PersistentCaffeineCacheManager implements CacheManager {
                 
                 if (newsList != null && !newsList.isEmpty()) {
                     storageService.uploadJson(fileName, newsList);
-                    log.info("Cache '{}' saved to Supabase ({} news items)", name, newsList.size());
+                    log.info("[CACHE] Caché '{}' persistida en Supabase ({} noticias)", name, newsList.size());
                 }
             } else {
                 Map<Object, Object> cacheMap = cache.getNativeCache().asMap();
                 if (!cacheMap.isEmpty()) {
                     storageService.uploadJson(fileName, cacheMap);
-                    log.info("Cache '{}' saved to Supabase ({} entries)", name, cacheMap.size());
+                    log.info("[CACHE] Caché '{}' persistida en Supabase ({} entradas)", name, cacheMap.size());
                 }
             }
         } catch (Exception e) {
-            log.error("Error saving cache '{}' to Supabase: {}", name, e.getMessage(), e);
+            log.error("[CACHE] Error persistiendo caché '{}' en Supabase: {}", name, e.getMessage(), e);
         }
     }
 
@@ -133,7 +134,7 @@ public class PersistentCaffeineCacheManager implements CacheManager {
         cache.clear(); 
         CompletableFuture.runAsync(() -> tryLoadCache(name, cache.getNativeCache()))
                 .exceptionally(ex -> {
-                    log.error("Failed to reload cache '{}': {}", name, ex.getMessage());
+                    log.error("[CACHE] Falló la recarga asíncrona de caché '{}': {}", name, ex.getMessage(), ex);
                     return null;
                 });
     }

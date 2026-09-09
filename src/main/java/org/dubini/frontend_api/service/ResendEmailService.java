@@ -23,6 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ResendEmailService {
 
@@ -39,6 +42,7 @@ public class ResendEmailService {
         this.resendProperties = resendProperties;
     }
     public void enviarRegistroMuseo(MuseoVisitanteRegistroRequest solicitud) {
+        log.info("[EMAIL] [MUSEO] Procesando registro de visita para '{}' ({})", solicitud.getNombre(), solicitud.getEmail());
         validarConfiguracion();
         String comentarios = normalizarComentarios(solicitud.getComentarios());
 
@@ -63,6 +67,8 @@ public class ResendEmailService {
     }
 
     public void enviarEmailContacto(ContactRequest solicitud) {
+        log.info("[EMAIL] [CONTACTO] Procesando consulta de contacto de '{}' ({}) - Asunto: '{}'",
+                solicitud.getNombre(), solicitud.getEmail(), solicitud.getAsunto());
         validarConfiguracion();
 
         Context context = new Context();
@@ -83,6 +89,7 @@ public class ResendEmailService {
     }
 
     public void enviarInscripcion(InscripcionRequest solicitud) {
+        log.info("[EMAIL] [INSCRIPCION] Procesando solicitud de socio de '{}' ({})", solicitud.getNombre(), solicitud.getEmail());
         validarConfiguracion();
 
         // Format address from separate fields
@@ -211,9 +218,16 @@ public class ResendEmailService {
             ResponseEntity<String> response = restTemplate.postForEntity("https://api.resend.com/emails", entity, String.class);
             
             if (!response.getStatusCode().is2xxSuccessful()) {
+                log.error("[EMAIL] Respuesta no exitosa de la API de Resend para '{}' (asunto: '{}'): status={}, body={}",
+                        destinatario, asunto, response.getStatusCode(), response.getBody());
                 throw new MuseoRegistroException("Error en la API de Resend: " + response.getStatusCode());
             }
+            log.info("[EMAIL] Correo enviado exitosamente a '{}' con asunto: '{}'", destinatario, asunto);
+        } catch (MuseoRegistroException e) {
+            throw e;
         } catch (Exception exception) {
+            log.error("[EMAIL] Error inesperado al enviar correo a '{}' (asunto: '{}'): {}",
+                    destinatario, asunto, exception.getMessage(), exception);
             throw new MuseoRegistroException("No se pudo procesar el envío de la solicitud.");
         }
     }
@@ -227,15 +241,19 @@ public class ResendEmailService {
 
     private void validarConfiguracion() {
         if (resendProperties.getMail() == null || resendProperties.getMail().isBlank()) {
+            log.error("[EMAIL] Configuración inválida: propiedad 'resend.mail' no configurada");
             throw new MuseoRegistroException("La propiedad resend.mail no está configurada.");
         }
         if (resendProperties.getAssociationEmailContact() == null || resendProperties.getAssociationEmailContact().isBlank()) {
+            log.error("[EMAIL] Configuración inválida: propiedad 'resend.association-email-contact' no configurada");
             throw new MuseoRegistroException("La propiedad resend.association-email-contact no está configurada.");
         }
         if (resendProperties.getAssociationEmailMuseum() == null || resendProperties.getAssociationEmailMuseum().isBlank()) {
+            log.error("[EMAIL] Configuración inválida: propiedad 'resend.association-email-museum' no configurada");
             throw new MuseoRegistroException("La propiedad resend.association-email-museum no está configurada.");
         }
         if (resendProperties.getAssociationEmailInscription() == null || resendProperties.getAssociationEmailInscription().isBlank()) {
+            log.error("[EMAIL] Configuración inválida: propiedad 'resend.association-email-inscription' no configurada");
             throw new MuseoRegistroException("La propiedad resend.association-email-inscription no está configurada.");
         }
     }

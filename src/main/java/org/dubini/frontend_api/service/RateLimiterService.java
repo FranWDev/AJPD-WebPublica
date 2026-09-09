@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class RateLimiterService {
 
@@ -25,6 +28,7 @@ public class RateLimiterService {
         createCache("contacto", 1, TimeUnit.HOURS);
         // Inicializar caché para inscripción (24h)
         createCache("inscripcion", 24, TimeUnit.HOURS);
+        log.info("[RATE_LIMIT] Servicio inicializado con contextos: museo (24h), contacto (1h), inscripcion (24h)");
     }
 
     private void createCache(String context, long duration, TimeUnit unit) {
@@ -44,7 +48,11 @@ public class RateLimiterService {
             return true;
         }
         Cache<String, Instant> cache = caches.get(context);
-        return cache == null || cache.getIfPresent(ip) == null;
+        boolean allowed = cache == null || cache.getIfPresent(ip) == null;
+        if (!allowed) {
+            log.warn("[RATE_LIMIT] Solicitud rechazada por exceso de tasa para IP '{}' en contexto '{}'", ip, context);
+        }
+        return allowed;
     }
 
     public void recordRequest(String ip) {
@@ -55,6 +63,7 @@ public class RateLimiterService {
         Cache<String, Instant> cache = caches.get(context);
         if (cache != null) {
             cache.put(ip, Instant.now());
+            log.debug("[RATE_LIMIT] Solicitud registrada para IP '{}' en contexto '{}'", ip, context);
         }
     }
 

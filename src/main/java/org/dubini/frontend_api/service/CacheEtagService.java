@@ -34,7 +34,7 @@ public class CacheEtagService {
 
         String cachedEtag = etagCache.get(contentHash);
         if (cachedEtag != null) {
-            log.debug("ETag retrieved from memory cache: {}", cachedEtag);
+            log.debug("[CACHE] [ETAG] ETag recuperado de memoria: {}", cachedEtag);
             return cachedEtag;
         }
 
@@ -47,14 +47,14 @@ public class CacheEtagService {
             String etag = "\"" + fullHash.substring(0, 16) + "\"";
 
             etagCache.put(contentHash, etag);
-            log.debug("ETag calculated and cached: {}", etag);
+            log.debug("[CACHE] [ETAG] Nuevo ETag calculado y cacheado: {}", etag);
             return etag;
 
         } catch (JsonProcessingException e) {
-            log.error("Error serializing content for ETag calculation: {}", e.getMessage());
+            log.error("[CACHE] [ETAG] Error al serializar contenido para cálculo de ETag: {}", e.getMessage());
             return "\"" + System.currentTimeMillis() + "\"";
         } catch (NoSuchAlgorithmException e) {
-            log.error("SHA-256 algorithm not available: {}", e.getMessage());
+            log.error("[CACHE] [ETAG] Algoritmo SHA-256 no disponible en el entorno: {}", e.getMessage());
             return "\"" + System.currentTimeMillis() + "\"";
         }
     }
@@ -79,6 +79,6 @@ public class CacheEtagService {
 
     public void clearEtagCache() {
         etagCache.clear();
-        log.info("ETag cache cleared");
+        log.info("[CACHE] [ETAG] Caché de ETags limpiada");
     }
 }

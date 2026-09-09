@@ -76,7 +76,7 @@ public class NewsService implements CacheWarmable {
                             newsByTitleCache.put(normalizeTitle(pub.getTitle()), pub);
                         }
                     }
-                    log.info("Cache warmed up with {} news items", data.size());
+                    log.info("[CACHE] [NEWS] Precalentamiento completado con {} noticias", data.size());
                 })
                 .doOnSuccess(v -> {
                     if (cacheManager instanceof PersistentCaffeineCacheManager pcm) {
@@ -85,7 +85,7 @@ public class NewsService implements CacheWarmable {
                 })
                 .then()
                 .onErrorResume(e -> {
-                    log.warn("Backoffice failed during warmup, attempting fallback from disk: {}", e.getMessage());
+                    log.warn("[CACHE] [NEWS] Falló conexión con backoffice durante precalentamiento, usando fallback de disco: {}", e.getMessage());
                     return fallbackFromDisk(cache).then();
                 });
     }
@@ -106,7 +106,7 @@ public class NewsService implements CacheWarmable {
             return objectMapper.convertValue(cached,
                     objectMapper.getTypeFactory().constructCollectionType(List.class, PublicationDTO.class));
         } catch (Exception e) {
-            log.error("Error converting cache value to List<PublicationDTO>: {}", e.getMessage());
+            log.error("[CACHE] [NEWS] Error al convertir valor de caché a lista de noticias: {}", e.getMessage());
             return null;
         }
     }
@@ -114,13 +114,13 @@ public class NewsService implements CacheWarmable {
     public Mono<List<PublicationDTO>> get() {
         Cache cache = cacheManager.getCache(CACHE_NAME);
         if (cache == null) {
-            log.error("✗ Cache {} no encontrada en CacheManager", CACHE_NAME);
+            log.error("[CACHE] [NEWS] Caché '{}' no encontrada en CacheManager", CACHE_NAME);
             return Mono.error(new CacheException("Cache no inicializada"));
         }
 
         List<PublicationDTO> cached = getFromCache(cache);
         if (cached != null && !cached.isEmpty()) {
-            log.info("✓ Returning {} news from in-memory cache", cached.size());
+            log.info("[CACHE] [NEWS] Retornando {} noticias desde memoria", cached.size());
             if (newsByTitleCache.isEmpty()) {
                 for (PublicationDTO pub : cached) {
                     if (pub.getTitle() != null) {
@@ -131,7 +131,7 @@ public class NewsService implements CacheWarmable {
             return Mono.just(cached);
         }
 
-        log.warn("Cache empty, calling backoffice to populate it...");
+        log.info("[CACHE] [NEWS] Memoria vacía, solicitando noticias a backoffice...");
 
         return newsClient.get()
                 .transformDeferred(CircuitBreakerOperator.of(getNewsCircuitBreaker()))
@@ -143,20 +143,20 @@ public class NewsService implements CacheWarmable {
                             newsByTitleCache.put(normalizeTitle(pub.getTitle()), pub);
                         }
                     }
-                    log.info("Cache updated with {} news items", news.size());
+                    log.info("[CACHE] [NEWS] Caché actualizada exitosamente con {} noticias", news.size());
                     if (cacheManager instanceof PersistentCaffeineCacheManager pcm) {
                         pcm.saveCache(CACHE_NAME);
                     }
                 })
                 .onErrorResume(e -> {
-                    log.warn("Backoffice failed, attempting fallback from disk: {}", e.getMessage());
+                    log.warn("[CACHE] [NEWS] Falló consulta al backoffice, usando fallback de disco: {}", e.getMessage());
                     return fallbackFromDisk(cache);
                 });
     }
 
     private Mono<List<PublicationDTO>> fallbackFromDisk(Cache cache) {
         if (cacheManager instanceof PersistentCaffeineCacheManager pcm) {
-            log.info("In-memory cache empty, attempting to load from disk...");
+            log.info("[CACHE] [NEWS] Recargando noticias desde almacenamiento persistente...");
             pcm.reloadCache(CACHE_NAME);
 
             try {
@@ -167,7 +167,7 @@ public class NewsService implements CacheWarmable {
 
             List<PublicationDTO> cached = getFromCache(cache);
             if (cached != null && !cached.isEmpty()) {
-                log.info("✓ Returning {} news from disk cache", cached.size());
+                log.info("[CACHE] [NEWS] Retornando {} noticias desde almacenamiento en disco", cached.size());
 
                 cache.put(CACHE_KEY, cached);
                 newsByTitleCache.clear();
@@ -176,7 +176,7 @@ public class NewsService implements CacheWarmable {
                         newsByTitleCache.put(normalizeTitle(pub.getTitle()), pub);
                     }
                 }
-                log.info("In-memory cache repopulated with {} news items from disk", cached.size());
+                log.info("[CACHE] [NEWS] Memoria reabastecida con {} noticias desde disco", cached.size());
 
                 return Mono.just(cached);
             }
@@ -208,11 +208,11 @@ public class NewsService implements CacheWarmable {
         }
 
         String normalizedRequestTitle = normalizeTitle(title);
-        log.debug("Searching for news with normalized title: {}", normalizedRequestTitle);
+        log.debug("[NEWS] Buscando noticia por título normalizado: '{}'", normalizedRequestTitle);
 
         PublicationDTO found = newsByTitleCache.get(normalizedRequestTitle);
         if (found != null) {
-            log.info("✓ Found news with title in O(1): {} (normalized: {})", found.getTitle(),
+            log.info("[NEWS] Noticia localizada en caché: '{}' (normalizado: '{}')", found.getTitle(),
                     normalizedRequestTitle);
             return Mono.just(found);
         }
@@ -221,11 +221,11 @@ public class NewsService implements CacheWarmable {
                 .flatMap(newsList -> {
                     PublicationDTO retryFound = newsByTitleCache.get(normalizedRequestTitle);
                     if (retryFound != null) {
-                        log.info("✓ Found news with title after refresh in O(1): {} (normalized: {})", retryFound.getTitle(),
+                        log.info("[NEWS] Noticia localizada tras refresco de caché: '{}' (normalizado: '{}')", retryFound.getTitle(),
                                 normalizedRequestTitle);
                         return Mono.just(retryFound);
                     } else {
-                        log.warn("✗ News with normalized title '{}' not found", normalizedRequestTitle);
+                        log.warn("[NEWS] Noticia con título normalizado '{}' no encontrada", normalizedRequestTitle);
                         return Mono.error(new BackofficeException(
                                 String.format("News with title '%s' not found", title)));
                     }
@@ -233,6 +233,7 @@ public class NewsService implements CacheWarmable {
     }
 
     public void clear() {
+        log.info("[CACHE] [NEWS] Petición de purga de caché recibida");
         Cache cache = cacheManager.getCache(CACHE_NAME);
         if (cache != null)
             cache.clear();
