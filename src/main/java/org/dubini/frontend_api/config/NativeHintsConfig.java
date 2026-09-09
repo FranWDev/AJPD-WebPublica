@@ -112,7 +112,6 @@ public class NativeHintsConfig {
             registerValidationClasses(hints);
         }
 
-        @SuppressWarnings("unchecked")
         private void registerDto(RuntimeHints hints, String className) {
             try {
                 Class<?> clazz = Class.forName(className);
@@ -120,12 +119,8 @@ public class NativeHintsConfig {
                         clazz,
                         MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
                         MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
-                        MemberCategory.DECLARED_FIELDS,
                         MemberCategory.INVOKE_PUBLIC_METHODS,
                         MemberCategory.INVOKE_DECLARED_METHODS);
-                if (java.io.Serializable.class.isAssignableFrom(clazz)) {
-                    hints.serialization().registerType((Class<? extends java.io.Serializable>) clazz);
-                }
             } catch (ClassNotFoundException e) {
                 System.err.println("DTO no encontrado: " + className);
             }
@@ -136,8 +131,7 @@ public class NativeHintsConfig {
                 hints.reflection().registerType(
                         Class.forName(className),
                         MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
-                        MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
-                        MemberCategory.DECLARED_FIELDS);
+                        MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS);
             } catch (ClassNotFoundException e) {
                 System.err.println("Exception no encontrada: " + className);
             }
@@ -173,8 +167,7 @@ public class NativeHintsConfig {
                         Class.forName(className),
                         MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
                         MemberCategory.INVOKE_DECLARED_METHODS,
-                        MemberCategory.INVOKE_PUBLIC_METHODS,
-                        MemberCategory.DECLARED_FIELDS);
+                        MemberCategory.INVOKE_PUBLIC_METHODS);
             } catch (ClassNotFoundException e) {
                 System.err.println("Config no encontrado: " + className);
             }
@@ -339,12 +332,25 @@ public class NativeHintsConfig {
                 registerClassIfExists(hints, "io.github.resilience4j.ratelimiter.RateLimiter");
                 registerClassIfExists(hints, "io.github.resilience4j.ratelimiter.RateLimiterConfig");
 
-                // Spring Boot integration
+                // Resilience4j Spring Boot 4 integration
+                registerClassIfExists(hints,
+                        "io.github.resilience4j.springboot4.circuitbreaker.autoconfigure.CircuitBreakerConfiguration");
+                registerClassIfExists(hints,
+                        "io.github.resilience4j.springboot4.circuitbreaker.autoconfigure.CircuitBreakerAutoConfiguration");
+                registerClassIfExists(hints,
+                        "io.github.resilience4j.springboot4.circuitbreaker.autoconfigure.CircuitBreakerProperties");
+                registerClassIfExists(hints, "io.github.resilience4j.springboot4.retry.autoconfigure.RetryProperties");
+                registerClassIfExists(hints,
+                        "io.github.resilience4j.springboot4.timelimiter.autoconfigure.TimeLimiterProperties");
+                registerClassIfExists(hints,
+                        "io.github.resilience4j.springboot4.bulkhead.autoconfigure.BulkheadProperties");
+                registerClassIfExists(hints,
+                        "io.github.resilience4j.springboot4.ratelimiter.autoconfigure.RateLimiterProperties");
+
+                // Legacy Spring Boot 3 integration (compatibilidad)
                 registerClassIfExists(hints,
                         "io.github.resilience4j.spring6.circuitbreaker.configure.CircuitBreakerConfiguration");
                 registerClassIfExists(hints, "io.github.resilience4j.spring6.retry.configure.RetryConfiguration");
-
-                // Configuration Properties - CRÍTICO
                 registerClassIfExists(hints,
                         "io.github.resilience4j.springboot3.circuitbreaker.autoconfigure.CircuitBreakerProperties");
                 registerClassIfExists(hints, "io.github.resilience4j.springboot3.retry.autoconfigure.RetryProperties");
@@ -420,10 +426,6 @@ public class NativeHintsConfig {
                 hints.reflection().registerType(
                         java.util.concurrent.ConcurrentHashMap.class,
                         MemberCategory.values());
-
-                // Serialization hints para Map<Object, Object>
-                hints.serialization().registerType(java.util.HashMap.class);
-                hints.serialization().registerType(java.util.concurrent.ConcurrentHashMap.class);
 
             } catch (Exception e) {
                 System.err.println("Supabase class issue: " + e.getMessage());

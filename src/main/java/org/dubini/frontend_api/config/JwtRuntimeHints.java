@@ -21,8 +21,7 @@ public class JwtRuntimeHints {
                         .registerType(Class.forName("io.jsonwebtoken.impl.security.KeysBridge"),
                                 hint -> hint.withMembers(
                                         org.springframework.aot.hint.MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
-                                        org.springframework.aot.hint.MemberCategory.INVOKE_DECLARED_METHODS,
-                                        org.springframework.aot.hint.MemberCategory.DECLARED_FIELDS));
+                                        org.springframework.aot.hint.MemberCategory.INVOKE_DECLARED_METHODS));
 
                 hints.reflection()
                         .registerType(Class.forName("io.jsonwebtoken.impl.DefaultJwtBuilder"),
