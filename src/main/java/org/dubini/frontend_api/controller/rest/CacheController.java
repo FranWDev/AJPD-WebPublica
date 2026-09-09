@@ -34,7 +34,7 @@ public class CacheController {
                     String serverEtag = cacheEtagService.calculateEtag(newsList);
                     boolean hasChanged = cacheEtagService.hasChanged(clientEtag, serverEtag);
 
-                    log.debug("Client ETag: {}, Server ETag: {}, Changed: {}",
+                    log.debug("[API] [CACHE] Comprobación de ETag (GET) - Cliente: '{}', Servidor: '{}', Modificado: {}",
                             clientEtag, serverEtag, hasChanged);
 
                     HttpHeaders headers = new HttpHeaders();
@@ -45,7 +45,7 @@ public class CacheController {
                     return new ResponseEntity<Void>(headers, status);
                 })
                 .onErrorResume(e -> {
-                    log.error("Error checking news update: {}", e.getMessage());
+                    log.error("[API] [CACHE] Error al verificar actualización de noticias (GET): {}", e.getMessage());
                     return Mono.just(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
                 });
     }
@@ -59,7 +59,7 @@ public class CacheController {
                     String serverEtag = cacheEtagService.calculateEtag(newsList);
                     boolean hasChanged = cacheEtagService.hasChanged(clientEtag, serverEtag);
 
-                    log.debug("HEAD - Client ETag: {}, Server ETag: {}, Changed: {}",
+                    log.debug("[API] [CACHE] Comprobación de ETag (HEAD) - Cliente: '{}', Servidor: '{}', Modificado: {}",
                             clientEtag, serverEtag, hasChanged);
 
                     HttpHeaders headers = new HttpHeaders();
@@ -70,14 +70,14 @@ public class CacheController {
                     return new ResponseEntity<Void>(headers, status);
                 })
                 .onErrorResume(e -> {
-                    log.error("Error checking news update (HEAD): {}", e.getMessage());
+                    log.error("[API] [CACHE] Error al verificar actualización de noticias (HEAD): {}", e.getMessage());
                     return Mono.just(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
                 });
     }
 
     @GetMapping("/api/cache/news/clear")
     public Mono<ResponseEntity<HttpResponse>> clearNewsCache() {
-
+        log.info("[API] [CACHE] Petición de purga y recarga de caché de noticias recibida");
         cacheEtagService.clearEtagCache();
 
         return newsService.warmUpCache()
@@ -90,6 +90,7 @@ public class CacheController {
     }
 
     private Mono<ResponseEntity<HttpResponse>> handleError(Throwable e) {
+        log.error("[API] [CACHE] Error durante la recarga de caché de noticias: {}", e.getMessage(), e);
         return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(HttpResponse.builder()
                         .timestamp(LocalDateTime.now())

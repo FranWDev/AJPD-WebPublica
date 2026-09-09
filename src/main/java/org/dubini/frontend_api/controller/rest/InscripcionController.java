@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.time.LocalDateTime;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/inscripcion")
 @RequiredArgsConstructor
@@ -27,8 +30,11 @@ public class InscripcionController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<HttpResponse> registrarInscripcion(@ModelAttribute InscripcionRequest request, HttpServletRequest httpRequest) {
         String clientIp = getClientIp(httpRequest);
+        log.info("[API] [INSCRIPCION] Petición de inscripción recibida desde IP '{}' para aspirante '{}' ({})",
+                clientIp, request.getNombre(), request.getEmail());
 
         if (!rateLimiterService.canMakeRequest(clientIp, "inscripcion")) {
+            log.warn("[API] [INSCRIPCION] Solicitud bloqueada por límite de tasa desde IP '{}'", clientIp);
             return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
                     .body(HttpResponse.builder()
                             .timestamp(LocalDateTime.now())
@@ -43,6 +49,7 @@ public class InscripcionController {
             resendEmailService.enviarInscripcion(request);
             rateLimiterService.recordRequest(clientIp, "inscripcion");
 
+            log.info("[API] [INSCRIPCION] Solicitud de inscripción tramitada exitosamente para '{}'", request.getEmail());
             return ResponseEntity.ok(HttpResponse.builder()
                     .timestamp(LocalDateTime.now())
                     .status(HttpStatus.OK.value())
@@ -50,6 +57,7 @@ public class InscripcionController {
                     .path("/api/inscripcion")
                     .build());
         } catch (Exception e) {
+            log.error("[API] [INSCRIPCION] Error al procesar inscripción para '{}': {}", request.getEmail(), e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(HttpResponse.builder()
                             .timestamp(LocalDateTime.now())

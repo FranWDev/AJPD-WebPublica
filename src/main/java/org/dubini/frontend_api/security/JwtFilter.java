@@ -15,6 +15,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Collections;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
@@ -45,6 +48,8 @@ public class JwtFilter extends OncePerRequestFilter {
             }
 
             if (token == null) {
+                log.warn("[AUTH] Acceso denegado a '{}' desde IP '{}': Cookie 'jwt' no encontrada",
+                        path, request.getRemoteAddr());
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write("No JWT token found");
                 return;
@@ -53,11 +58,14 @@ public class JwtFilter extends OncePerRequestFilter {
             boolean isValid = jwtProvider.validateToken(token);
 
             if (!isValid) {
+                log.warn("[AUTH] Acceso denegado a '{}' desde IP '{}': Token JWT inválido o expirado",
+                        path, request.getRemoteAddr());
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write("Invalid JWT token");
                 return;
             }
 
+            log.info("[AUTH] Petición autenticada con éxito para ruta protegida '{}'", path);
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken("backoffice", null,
                     Collections.emptyList());
             SecurityContextHolder.clearContext();

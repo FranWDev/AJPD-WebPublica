@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.time.LocalDateTime;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/contacto")
 @RequiredArgsConstructor
@@ -27,8 +30,11 @@ public class ContactController {
     @PostMapping
     public ResponseEntity<HttpResponse> enviarMensaje(@Valid @RequestBody ContactRequest request, HttpServletRequest httpRequest) {
         String clientIp = getClientIp(httpRequest);
+        log.info("[API] [CONTACTO] Petición de contacto recibida desde IP '{}' ({}) - Asunto: '{}'",
+                clientIp, request.getEmail(), request.getAsunto());
 
         if (!rateLimiterService.canMakeRequest(clientIp, "contacto")) {
+            log.warn("[API] [CONTACTO] Solicitud bloqueada por límite de tasa desde IP '{}'", clientIp);
             return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
                     .body(HttpResponse.builder()
                             .timestamp(LocalDateTime.now())
@@ -46,6 +52,7 @@ public class ContactController {
             resendEmailService.enviarEmailContacto(request);
             rateLimiterService.recordRequest(clientIp, "contacto");
 
+            log.info("[API] [CONTACTO] Mensaje de contacto enviado con éxito para '{}'", request.getEmail());
             return ResponseEntity.ok(HttpResponse.builder()
                     .timestamp(LocalDateTime.now())
                     .status(HttpStatus.OK.value())
@@ -53,6 +60,7 @@ public class ContactController {
                     .path("/api/contacto")
                     .build());
         } catch (Exception e) {
+            log.error("[API] [CONTACTO] Error al procesar mensaje de contacto para '{}': {}", request.getEmail(), e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(HttpResponse.builder()
                             .timestamp(LocalDateTime.now())

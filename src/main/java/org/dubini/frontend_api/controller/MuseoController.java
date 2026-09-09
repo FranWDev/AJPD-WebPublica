@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/museo")
 @Validated
@@ -36,10 +38,12 @@ public class MuseoController {
         solicitud.sanitize();
 
         if (envioSolicitudesDeshabilitado()) {
+            log.warn("[API] [MUSEO] Solicitud rechazada: el envío de solicitudes está deshabilitado");
             throw new MuseoRegistroException("El envío de solicitudes no está habilitado en este momento.");
         }
 
         String clientIp = extractClientIp(request);
+        log.info("[API] [MUSEO] Petición de registro de visitante recibida desde IP '{}' ({})", clientIp, solicitud.getEmail());
         MuseoVisitanteRegistroResponse registro = museoRegistroService.registrarVisitante(solicitud, clientIp);
 
         HttpResponse response = HttpResponse.builder()
@@ -50,7 +54,8 @@ public class MuseoController {
                 .data(registro)
                 .build();
 
-            return ResponseEntity.ok(response);
+        log.info("[API] [MUSEO] Registro completado exitosamente para '{}'", solicitud.getEmail());
+        return ResponseEntity.ok(response);
     }
 
     private boolean envioSolicitudesDeshabilitado() {

@@ -7,6 +7,9 @@ import org.dubini.frontend_api.dto.MuseoVisitanteRegistroResponse;
 import org.dubini.frontend_api.exception.MuseoRegistroException;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class MuseoRegistroService {
 
@@ -19,10 +22,13 @@ public class MuseoRegistroService {
     }
 
     public MuseoVisitanteRegistroResponse registrarVisitante(MuseoVisitanteRegistroRequest solicitud, String clientIp) {
+        log.info("[MUSEO] Procesando registro de visita para '{}' ({}) desde IP '{}'",
+                solicitud.getNombre(), solicitud.getEmail(), clientIp);
         validarSolicitudCompleta(solicitud);
         validarRateLimit(clientIp);
         resendEmailService.enviarRegistroMuseo(solicitud);
         rateLimiterService.recordRequest(clientIp);
+        log.info("[MUSEO] Visita registrada exitosamente para '{}' en fecha {}", solicitud.getNombre(), solicitud.getFecha());
         return new MuseoVisitanteRegistroResponse(
                 solicitud.getNombre().trim(),
                 solicitud.getEmail().trim(),
@@ -35,6 +41,7 @@ public class MuseoRegistroService {
 
     private void validarSolicitudCompleta(MuseoVisitanteRegistroRequest solicitud) {
         if (solicitud == null) {
+            log.warn("[MUSEO] Validación fallida: solicitud de visita nula");
             throw new MuseoRegistroException("No se recibió información para registrar la visita.");
         }
 
@@ -44,9 +51,11 @@ public class MuseoRegistroService {
 
         LocalDate fecha = solicitud.getFecha();
         if (fecha == null) {
+            log.warn("[MUSEO] Validación fallida para '{}': fecha de visita es nula", solicitud.getEmail());
             throw new MuseoRegistroException("La fecha de visita es obligatoria.");
         }
         if (fecha.isBefore(LocalDate.now())) {
+            log.warn("[MUSEO] Validación fallida para '{}': fecha {} es anterior a hoy", solicitud.getEmail(), fecha);
             throw new MuseoRegistroException("La fecha de visita no puede ser anterior al día actual.");
         }
     }
@@ -59,6 +68,7 @@ public class MuseoRegistroService {
 
     private void validarRateLimit(String ip) {
         if (!rateLimiterService.canMakeRequest(ip)) {
+            log.warn("[MUSEO] Solicitud rechazada por exceso de tasa para IP '{}'", ip);
             throw new MuseoRegistroException(rateLimiterService.getRateLimitMessage());
         }
     }
