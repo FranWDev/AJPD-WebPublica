@@ -118,11 +118,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Validación de días jueves y viernes
+  // Validación de días martes y miércoles
   const isDayAllowed = (dateString) => {
     const date = new Date(dateString + 'T12:00:00');
-    const dayOfWeek = date.getDay(); // 0=domingo, 4=jueves, 5=viernes
-    return dayOfWeek === 4 || dayOfWeek === 5;
+    const dayOfWeek = date.getDay(); // 0=domingo, 2=martes, 3=miércoles
+    return dayOfWeek === 2 || dayOfWeek === 3;
   };
 
   const getDayOfWeek = (dateString) => {
@@ -139,8 +139,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!isDayAllowed(dateString)) {
       horaRangoSelect.disabled = true;
-      horaRangoSelect.innerHTML = '<option value="">Solo se permiten jueves y viernes</option>';
-      statusDiv.textContent = "Solo se permiten visitas los jueves y viernes.";
+      horaRangoSelect.innerHTML = '<option value="">Solo se permiten martes y miércoles</option>';
+      statusDiv.textContent = "Solo se permiten visitas los martes y miércoles.";
       statusDiv.className = "form-status error";
       return;
     }
@@ -150,12 +150,12 @@ document.addEventListener("DOMContentLoaded", () => {
     statusDiv.textContent = "";
     statusDiv.className = "form-status";
 
-    if (dayOfWeek === 4) {
-      // Jueves: 8:30 a 11:00
-      horaRangoSelect.innerHTML = '<option value="08:30-11:00">08:30 - 11:00</option>';
-    } else if (dayOfWeek === 5) {
-      // Viernes: 11:30 a 13:15
-      horaRangoSelect.innerHTML = '<option value="11:30-13:15">11:30 - 13:15</option>';
+    if (dayOfWeek === 2) {
+      // Martes: 8:15 a 10:00
+      horaRangoSelect.innerHTML = '<option value="08:15-10:00">08:15 - 10:00</option>';
+    } else if (dayOfWeek === 3) {
+      // Miércoles: 9:15 a 11:00
+      horaRangoSelect.innerHTML = '<option value="09:15-11:00">09:15 - 11:00</option>';
     }
   };
 
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!value) return;
 
     if (!isDayAllowed(value)) {
-      statusDiv.textContent = "Solo están disponibles los jueves y viernes. Por favor, selecciona uno de estos días.";
+      statusDiv.textContent = "Solo están disponibles los martes y miércoles. Por favor, selecciona uno de estos días.";
       statusDiv.className = "form-status error";
       inputElement.value = '';
       updateHoraRangoOptions('');
@@ -258,9 +258,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Validar que la fecha sea jueves o viernes
+    // Validar que la fecha sea martes o miércoles
     if (!isDayAllowed(fecha)) {
-      statusDiv.textContent = "Solo se permiten visitas los jueves y viernes.";
+      statusDiv.textContent = "Solo se permiten visitas los martes y miércoles.";
       statusDiv.className = "form-status error";
       return;
     }
