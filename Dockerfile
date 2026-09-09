@@ -1,7 +1,7 @@
 # ============================
 # 1. Etapa de build (Maven)
 # ============================
-FROM maven:3.9-eclipse-temurin-17 AS build
+FROM maven:3.9-eclipse-temurin-25 AS build
 
 WORKDIR /app
 
@@ -19,7 +19,7 @@ RUN mvn -q -B clean package -DskipTests
 # ============================
 # 2. Etapa de runtime 
 # ============================
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:25-jre
 
 # Para apps Java, es buena práctica evitar root
 RUN useradd -m spring
